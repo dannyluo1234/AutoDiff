@@ -15,7 +15,7 @@
 ​	The user will use `pip` to install the package. In the ideal case, when users install the package, its dependencies will automatically be added as well so that the only thing that the user needs to import is our library (similar to how numpy is a dependency of pandas, but users only need to `import pandas` to use all of its functionality).
 ​	To instantiate an AD object, the user will just call the AD function within the library with the function to be differentiated. By passing in additional optional methods, the user can customize the AD process. After creating the differentiated function, the user can then call this function with the value to be evaluated in the form of a Variable class within our library. For example, a typical use case can look like this:
 
-![Screen Shot 2021-10-20 at 5.39.23 PM](/Users/adrianatrejo-sheu/Library/Application Support/typora-user-images/Screen Shot 2021-10-20 at 5.39.23 PM.png)
+![][Screen Shot 2021-10-20 at 5.39.23 PM](/Users/adrianatrejo-sheu/Library/Application Support/typora-user-images/Screen Shot 2021-10-20 at 5.39.23 PM.png)
 
 #### Software Organization
 
