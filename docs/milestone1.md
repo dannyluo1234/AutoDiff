@@ -20,7 +20,7 @@
 
 #### Software Organization
 
-​	The overall structure will have multiple levels that all read from a main program that performs the AD process. There will be separate pathways that will solve different mathematical derivatives (i.e. separating derivatives of exponentials and trigonometric ones). We will include multiple packages that are loaded into the program that the client will have access to when downloading our library. Our program will be tested live using both TravisCI and CodeCov, and those tests can be seen on the software’s GitHub. The software can also be downloaded from PyPi.org. To package our module, we can use a framework that can keep all of our files and directories organized as well as make them reusable and reproducible.
+​	The overall structure will have multiple levels that all read from a main program that performs the AD process. There will be separate pathways that will solve different mathematical derivatives (i.e. separating derivatives of exponentials and trigonometric ones). We will include multiple packages that are loaded into the program that the client will have access to when downloading our library. Our program will be tested live using both TravisCI and CodeCov, and those tests can be seen on the software’s GitHub. The software can also be downloaded from PyPi.org. We do not plan to use a framework to package our program. 
 
 #### Implementation
 
