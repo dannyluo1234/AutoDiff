@@ -15,6 +15,7 @@
 ​    The user will use `pip` to install the package. When users install the package, its dependencies will automatically be added as well so that the only thing that the user needs to import is our library (similar to how numpy is a dependency of pandas, but users only need to `import pandas` to use all of its functionality).
 ​    To instantiate an AD object, the user will just call the AD function within the library with the function to be differentiated. By passing in additional optional methods, the user can customize the AD process. After creating the differentiated function, the user can then call this function with the value to be evaluated in the form of a Variable class within our library. For example, a typical use case can look like this:
 
+<img width="623" alt="Screen Shot 2021-11-02 at 1 32 34 PM" src="https://user-images.githubusercontent.com/89878381/139916239-c6ae447f-3ccb-4d6f-b77d-71a6f0c24257.png">
 
 
 
@@ -22,6 +23,8 @@
 
 ​    The overall structure will have multiple levels that all read from a main program that performs the AD process. There will be separate pathways that will solve different mathematical derivatives (i.e. separating derivatives of exponentials and trigonometric ones). We will include multiple packages that are loaded into the program that the client will have access to when downloading our library. The two main modules that we will have is a Dual class and our fast forward auto differentiation. The Dual class will be used to represent complex numbers that can be entered into our auto differentiation function. The auto differentiation function implements a forward mode auto differentiation by taking advantage of the chain rule.Our program will be tested live using both TravisCI and CodeCov, and those tests can be seen on the software’s GitHub. The software can also be downloaded from PyPi.org. We do not plan to use a framework to package our program. 
 Here is what the structure of our program will look like:
+
+<img width="361" alt="Screen Shot 2021-11-02 at 1 33 00 PM" src="https://user-images.githubusercontent.com/89878381/139916322-8401d920-e278-4b2c-b774-eef25fed85a9.png">
 
 
 
@@ -50,4 +53,5 @@ Dual class: a custom class capable of representing complex numbers to be entered
 Forward mode auto differentiating: a module that implements forward mode auto differentiation by taking advantage of the chain rule. 
 
 
+<img width="361" alt="Screen Shot 2021-11-02 at 1 33 00 PM" src="https://user-images.githubusercontent.com/89878381/139916322-8401d920-e278-4b2c-b774-eef25fed85a9.png">
 
