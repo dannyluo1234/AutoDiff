@@ -7,6 +7,17 @@ class AutoDiffToy():
         self.val = val
         self.der = der
         
+    # need to return the attributes so that the instance is updated
+
+    def __truediv__(self, other):
+        #ry:
+        value = self.val / other.val  # must do the value
+        der = (other.val* self.der  - self.val * other.der)/ other.val**2 # quotient rule
+        return AutoDiffToy(value,der)
+
+    def __rtruediv__(self,other):
+        return self.__truediv__(other)   
+
     def __mul__(self, other):
         #ry:
         value = self.val * other.val  # must do the value
@@ -14,7 +25,7 @@ class AutoDiffToy():
         # except AttributeError:
         #     value = self.val * other # when you don't store the values
         #     der = self.der * other
-        return AutoDiffToy(value,der)   # need to return the attributes so that the instance is updated
+        return AutoDiffToy(value,der)   
     
     def __rmul__(self, other):
         return self.__mul__(other) #to get the other order
@@ -41,7 +52,8 @@ class AutoDiffToy():
         #     der = other * self.val **(other - 1)
         return AutoDiffToy(value, der)
         
-    
+    def __rpow__(self,other):
+        return self.__rpow__(other)
     
     def __str__(self):
         s = f"Value: {self.val}"
@@ -65,8 +77,12 @@ class AutoDiffToy():
 
 # How to do the sin/cos case
     def cos(self):
-        value  = np.cos(self.val)
-        der = -1* np.sin(self.val)*self.der
+        if isinstance(other,float) or isinstance(other, int):
+            value = np.cos(other)
+            der = -1*np.sin(other)
+        elif isinstance(other,dual):
+            value  = np.cos(self.val)
+            der = -1* np.sin(self.val)*self.der
         return AutoDiffToy(value, der)
 
 
