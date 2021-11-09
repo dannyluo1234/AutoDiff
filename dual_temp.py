@@ -106,7 +106,18 @@ def exp(other):
     else:
         raise TypeError             
         
-            
+def get_gradient(f,dimension,value):
+    gradient = []
+    for i in range(dimension):
+        dual_list = []
+        for j in range(dimension):
+            if i == j:
+                dual_list.append(dual(value[j], 1))
+            else:
+                dual_list.append(dual(value[j], 0))
+        function = f(*dual_list)
+        gradient.append(function.der)
+    return gradient
             
             
             
