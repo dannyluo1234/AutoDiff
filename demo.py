@@ -18,7 +18,7 @@ y = dual(2)
 f = sin(x*y) + x**y -2*x
 print(f.val, f.der)
 
-# Calculating gradient
+# Calculating gradient, note that the sin function is the ones we define
 def f(x, y, z):
     return sin(x) + y**3 + x*z
 print(get_gradient(f, 3, [1,3,2]))
