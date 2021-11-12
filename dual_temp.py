@@ -9,9 +9,9 @@ import math
 import numpy as np
 
 class dual():
-    def __init__(self, value, derivative=1):
+    def __init__(self, value, direction=1):
         self.val = value
-        self.der = derivative
+        self.der = direction
         
     def __add__(self, other):
         if isinstance(other, dual) :
@@ -178,17 +178,30 @@ def exp(other):
         return dual(math.exp(other.val), math.exp(other.val) * other.der)
     else:
         raise TypeError             
-        
+
+# To get the gradient, we need to set different seed for different coordinate and calculate the forward mode for n times where n is the dimension
 def get_gradient(f,dimension,value):
     gradient = []
+
+    # For loop over dimension, each calculating one coordinate of the gradient
     for i in range(dimension):
+
+        # Initialize the dual numbers with the specific seed, the seed should have 1 at the current dimension and 0 in other dimension.
         dual_list = []
+
+        # Loop over all the variables to initialize it
         for j in range(dimension):
+            # This is the only variable that has 1 as the self.der
             if i == j:
                 dual_list.append(dual(value[j], 1))
+            # All other dual variables should have 0 as the self.der as specified by the seed
             else:
                 dual_list.append(dual(value[j], 0))
+
+        # Perform Forward Mode
         function = f(*dual_list)
+
+        # Attach this coordinate to the final result
         gradient.append(function.der)
     return gradient
             
