@@ -10,8 +10,11 @@ import numpy as np
 
 class dual():
     def __init__(self, value, direction=1):
-        self.val = value
-        self.der = direction
+        if (isinstance(value, int) or isinstance(value, float)) and (isinstance(direction, int) or isinstance(direction, float)):
+            self.val = value
+            self.der = direction
+        else:
+            raise TypeError
         
     def __add__(self, other):
         if isinstance(other, dual) :
