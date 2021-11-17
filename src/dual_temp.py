@@ -8,7 +8,26 @@ Created on Sat Oct 30 17:47:39 2021
 import math
 import numpy as np
 
-class dual():
+class Dual():
+    """
+    A dual class that keeps track of the value and derivative of a function for
+    automatic differentiation. It should be initiated by calling the class
+    followed by a real number. A direction can also be specified as a second
+    argument in order to differentiate towards a specific vector direction.
+    For instance,
+
+        x = Dual(3)
+        y = Dual(4, 2)
+
+    Parameters
+    ----------
+    value : real number
+            First argument
+    direction : real number, optional
+            Specifies a vector direction to calculate the gradient. The default
+            number is 1
+    """
+
     def __init__(self, value, direction=1):
         if (isinstance(value, int) or isinstance(value, float)) and (isinstance(direction, int) or isinstance(direction, float)):
             self.val = value
@@ -17,10 +36,10 @@ class dual():
             raise TypeError
         
     def __add__(self, other):
-        if isinstance(other, dual) :
-            return dual(self.val + other.val, self.der + other.der)
-        elif isinstance(other, float) or isinstance(other, int):
+        if isinstance(other, float) or isinstance(other, int):
             return dual(self.val + other, self.der)
+        elif isinstance(other, dual):
+            return dual(self.val + other.val, self.der + other.der)
         else:
             raise TypeError
             
@@ -207,38 +226,3 @@ def get_gradient(f,dimension,value):
         # Attach this coordinate to the final result
         gradient.append(function.der)
     return gradient
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-        
-        
-        
