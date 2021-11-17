@@ -116,27 +116,27 @@ class TestForward:
 
     
     # test division between a dual number and non-dual number
-    def test_div_rdiv(self):
-    x = 2
-    y = dual(1, 1)
-    f = x/y
-    assert f.val == 2
-    assert f.der ==
+#     def test_div_rdiv(self):
+#     x = 2
+#     y = dual(1, 1)
+#     f = x/y
+#     assert f.val == 2
+#     assert f.der ==
 
-    # test reverse division between a dual number and non-dual number
-    f_rev = y/x
-    assert f_rev.val = 0.5
-    assert f_rev.der =
+#     # test reverse division between a dual number and non-dual number
+#     f_rev = y/x
+#     assert f_rev.val = 0.5
+#     assert f_rev.der =
 
-    # test division between two dual numbers
-    x = dual(2, 2)
-    y = dual(1, 2)
-    f = x/y
-    assert f.val = 2
-    assert f.der =
+#     # test division between two dual numbers
+#     x = dual(2, 2)
+#     y = dual(1, 2)
+#     f = x/y
+#     assert f.val = 2
+#     assert f.der =
 
-    f_rev = y/x
-    assert rf.val = 0.5
-    assert rf.der =
+#     f_rev = y/x
+#     assert rf.val = 0.5
+#     assert rf.der =
 
     
