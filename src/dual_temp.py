@@ -9,8 +9,6 @@ import math
 import numpy as np
 
 class Dual():
-<<<<<<< HEAD
-=======
     """
     A dual class that keeps track of the value and derivative of a function for
     automatic differentiation. It should be initiated by calling the class
@@ -30,7 +28,6 @@ class Dual():
             number is 1
     """
 
->>>>>>> 8186e21d57c797ca96cc703786f82db75ecaa4d7
     def __init__(self, value, direction=1):
         if (isinstance(value, int) or isinstance(value, float)) and (isinstance(direction, int) or isinstance(direction, float)):
             self.val = value
@@ -39,17 +36,10 @@ class Dual():
             raise TypeError
         
     def __add__(self, other):
-<<<<<<< HEAD
-        if isinstance(other, Dual) :
-            return Dual(self.val + other.val, self.der + other.der)
-        elif isinstance(other, float) or isinstance(other, int):
-            return Dual(self.val + other, self.der)
-=======
         if isinstance(other, float) or isinstance(other, int):
             return Dual(self.val + other, self.der)
         elif isinstance(other, Dual):
             return Dual(self.val + other.val, self.der + other.der)
->>>>>>> 8186e21d57c797ca96cc703786f82db75ecaa4d7
         else:
             raise TypeError
             
@@ -69,11 +59,7 @@ class Dual():
     
     def __truediv__(self, other):
         if isinstance(other, float) or isinstance(other, int):
-<<<<<<< HEAD
-            return Dual(self.val / other, self.der / other)        
-=======
             return Dual(self.val / other, self.der / other)
->>>>>>> 8186e21d57c797ca96cc703786f82db75ecaa4d7
         elif isinstance(other, Dual):
             return Dual(self.val / other.val, (self.der * other.val - self.val * other.der)/(other.val**2))
         else:
@@ -81,21 +67,13 @@ class Dual():
     
     def __rtruediv__(self, other):
         if isinstance(other, float) or isinstance(other, int):
-<<<<<<< HEAD
-            return Dual(other/self.val, -self.der * other /(self.val ** 2))     
-=======
             return Dual(other/self.val, -self.der * other /(self.val ** 2))
->>>>>>> 8186e21d57c797ca96cc703786f82db75ecaa4d7
         else:
             raise TypeError      
             
     def __sub__(self, other):
         if isinstance(other, float) or isinstance(other, int):
-<<<<<<< HEAD
-            return Dual(self.val - other, self.der)   
-=======
             return Dual(self.val - other, self.der)
->>>>>>> 8186e21d57c797ca96cc703786f82db75ecaa4d7
         elif isinstance(other, Dual):
             return Dual(self.val - other.val, self.der - other.der)
         else:
@@ -103,21 +81,13 @@ class Dual():
     
     def __rsub__(self, other):
         if isinstance(other, float) or isinstance(other, int):
-<<<<<<< HEAD
-            return Dual(other-self.val, -self.der )     
-=======
             return Dual(other-self.val, -self.der )
->>>>>>> 8186e21d57c797ca96cc703786f82db75ecaa4d7
         else:
             raise TypeError     
             
     def __pow__(self, other):
         if isinstance(other, float) or isinstance(other, int):
-<<<<<<< HEAD
-            return Dual(self.val ** other, other * self.val ** (other-1) * self.der)   
-=======
             return Dual(self.val ** other, other * self.val ** (other-1) * self.der)
->>>>>>> 8186e21d57c797ca96cc703786f82db75ecaa4d7
         elif isinstance(other, Dual):
             return Dual(self.val ** other.val, self.val ** other.val * (other.der * math.log(self.val) + other.val / self.val * self.der))
         else:
@@ -125,11 +95,7 @@ class Dual():
     
     def __rpow__(self, other):
         if isinstance(other, float) or isinstance(other, int):
-<<<<<<< HEAD
-            return Dual(other ** self.val, self.der * math.log(other) )     
-=======
             return Dual(other ** self.val, self.der * math.log(other) )
->>>>>>> 8186e21d57c797ca96cc703786f82db75ecaa4d7
         
 def sin(other):
     if isinstance(other, float) or isinstance(other, int):
@@ -259,27 +225,16 @@ def get_gradient(f,dimension,value):
     for i in range(dimension):
 
         # Initialize the Dual numbers with the specific seed, the seed should have 1 at the current dimension and 0 in other dimension.
-<<<<<<< HEAD
-        Dual_list = []
-=======
         dual_list = []
->>>>>>> 8186e21d57c797ca96cc703786f82db75ecaa4d7
 
         # Loop over all the variables to initialize it
         for j in range(dimension):
             # This is the only variable that has 1 as the self.der
             if i == j:
-<<<<<<< HEAD
-                Dual_list.append(Dual(value[j], 1))
-            # All other Dual variables should have 0 as the self.der as specified by the seed
-            else:
-                Dual_list.append(Dual(value[j], 0))
-=======
                 dual_list.append(Dual(value[j], 1))
             # All other dual variables should have 0 as the self.der as specified by the seed
             else:
                 dual_list.append(Dual(value[j], 0))
->>>>>>> 8186e21d57c797ca96cc703786f82db75ecaa4d7
 
         # Perform Forward Mode
         function = f(*Dual_list)
