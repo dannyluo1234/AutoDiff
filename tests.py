@@ -131,12 +131,12 @@ def test_div_rdiv():
     y = Dual(1, 1)
     f = x/y
     assert f.val == 2
-    assert f.der == -1
+    assert f.der == -2
 
     # test reverse division between a Dual number and non-Dual number
     f_rev = y/x
     assert f_rev.val == 0.5
-    assert f_rev.der == 1
+    assert f_rev.der == 0.5
 
     # test division between two Dual numbers
     x = Dual(2, 1)
@@ -146,8 +146,8 @@ def test_div_rdiv():
     assert f.der == -1
 
     f_rev = y/x
-    assert rf.val == 0.5
-    assert rf.der == 0.25
+    assert f_rev.val == 0.5
+    assert f_rev.der == 0.25
 
     # test invalid type division
     with pytest.raises(TypeError):
@@ -160,14 +160,14 @@ def test_pow_rpow():
     y = Dual(3, 1)
     f = x**y
     assert f.val == 8, Exception(f"test_pow_rpow has error two Dual")
-    assert f.der == 12, Exception(f"test_pow_rpow has error two Dual")
+    assert f.der == pytest.approx(2**3*(np.log(2)+3/2), tolerance), Exception(f"test_pow_rpow has error two Dual")
 
     # test reverse between two Dual numbers
     x = Dual(2, 1)
     y = Dual(3, 2)
     f = y**x
     assert f.val == 9, Exception(f"test_pow_rpow has error two Dual")
-    assert f.der == 6, Exception(f"test_pow_rpow has error two Dual")
+    assert f.der == pytest.approx(3**2*(np.log(3)+2/3*2), tolerance), Exception(f"test_pow_rpow has error two Dual")
 
     # test one Dual number
     x = Dual(2, 1)
@@ -182,7 +182,7 @@ def test_pow_rpow():
     y = 3
     f = y**x
     assert f.val == 9, Exception(f"test_pow_rpow has error two Dual")
-    assert f.der == 6, Exception(f"test_pow_rpow has error two Dual")
+    assert f.der == pytest.approx(3**2*(np.log(3)*1), tolerance), Exception(f"test_pow_rpow has error two Dual")
 
     # test invalid type power
     with pytest.raises(TypeError):
@@ -323,7 +323,7 @@ def test_arcsinh():
     x = Dual(2, 1)
     f = arcsinh(x)
     assert f.val == pytest.approx(np.arcsinh(2), tolerance), Exception(f"test_arcsinh has error")
-    assert f.der == pytest.approx(1/np.sqrt(4),tolerance), Exception(f"test_arcsinh has error")
+    assert f.der == pytest.approx(1/np.sqrt(5),tolerance), Exception(f"test_arcsinh has error")
 
     # test arcsinh with a non-Dual number
     x = 2
