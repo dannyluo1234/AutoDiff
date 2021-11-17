@@ -237,7 +237,7 @@ def get_gradient(f,dimension,value):
                 dual_list.append(Dual(value[j], 0))
 
         # Perform Forward Mode
-        function = f(*Dual_list)
+        function = f(*dual_list)
 
         # Attach this coordinate to the final result
         gradient.append(function.der)
