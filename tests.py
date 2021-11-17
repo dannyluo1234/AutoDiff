@@ -337,13 +337,21 @@ def test_sqrt():
     y = Dual(-1)
     a = 1.21
     b = (-1)
+
+    # test sqrt on a simple Dual number
     f1 = sqrt(x)
     assert f1.val == pytest.approx(np.sqrt(4), tolerance), Exception(f"test_sqrt has error for Dual class")
     assert f1.der == pytest.approx(0.5, tolerance), Exception(f"test_sqrt has error for the derivative for Dual class")
+
+    # test sqrt on negative Dual number
     with pytest.raises(ValueError):
         f2 = sqrt(y)
+
+    # test sqrt on a float
     f3 = sqrt(a)
     assert f3 == pytest.approx(np.sqrt(1.21), tolerance), Exception(f"test_sqrt has error for real number")
+
+    # test sqrt on a negative real number
     with pytest.raises(ValueError):
         f4 = sqrt(b)
 
