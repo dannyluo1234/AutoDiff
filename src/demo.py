@@ -8,7 +8,7 @@ Created on Mon Nov  1 13:22:24 2021
 from dual_temp import *
 
 # Single dimension input case, x=1
-x = dual(1)
+x = Dual(1)
 f = sin(x) + x + x**2
 print(f.val, f.der)
 

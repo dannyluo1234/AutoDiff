@@ -9,6 +9,28 @@ import math
 import numpy as np
 
 class Dual():
+<<<<<<< HEAD
+=======
+    """
+    A dual class that keeps track of the value and derivative of a function for
+    automatic differentiation. It should be initiated by calling the class
+    followed by a real number. A direction can also be specified as a second
+    argument in order to differentiate towards a specific vector direction.
+    For instance,
+
+        x = Dual(3)
+        y = Dual(4, 2)
+
+    Parameters
+    ----------
+    value : real number
+            First argument
+    direction : real number, optional
+            Specifies a vector direction to calculate the gradient. The default
+            number is 1
+    """
+
+>>>>>>> 8186e21d57c797ca96cc703786f82db75ecaa4d7
     def __init__(self, value, direction=1):
         if (isinstance(value, int) or isinstance(value, float)) and (isinstance(direction, int) or isinstance(direction, float)):
             self.val = value
@@ -17,10 +39,17 @@ class Dual():
             raise TypeError
         
     def __add__(self, other):
+<<<<<<< HEAD
         if isinstance(other, Dual) :
             return Dual(self.val + other.val, self.der + other.der)
         elif isinstance(other, float) or isinstance(other, int):
             return Dual(self.val + other, self.der)
+=======
+        if isinstance(other, float) or isinstance(other, int):
+            return Dual(self.val + other, self.der)
+        elif isinstance(other, Dual):
+            return Dual(self.val + other.val, self.der + other.der)
+>>>>>>> 8186e21d57c797ca96cc703786f82db75ecaa4d7
         else:
             raise TypeError
             
@@ -40,7 +69,11 @@ class Dual():
     
     def __truediv__(self, other):
         if isinstance(other, float) or isinstance(other, int):
+<<<<<<< HEAD
             return Dual(self.val / other, self.der / other)        
+=======
+            return Dual(self.val / other, self.der / other)
+>>>>>>> 8186e21d57c797ca96cc703786f82db75ecaa4d7
         elif isinstance(other, Dual):
             return Dual(self.val / other.val, (self.der * other.val - self.val * other.der)/(other.val**2))
         else:
@@ -48,13 +81,21 @@ class Dual():
     
     def __rtruediv__(self, other):
         if isinstance(other, float) or isinstance(other, int):
+<<<<<<< HEAD
             return Dual(other/self.val, -self.der * other /(self.val ** 2))     
+=======
+            return Dual(other/self.val, -self.der * other /(self.val ** 2))
+>>>>>>> 8186e21d57c797ca96cc703786f82db75ecaa4d7
         else:
             raise TypeError      
             
     def __sub__(self, other):
         if isinstance(other, float) or isinstance(other, int):
+<<<<<<< HEAD
             return Dual(self.val - other, self.der)   
+=======
+            return Dual(self.val - other, self.der)
+>>>>>>> 8186e21d57c797ca96cc703786f82db75ecaa4d7
         elif isinstance(other, Dual):
             return Dual(self.val - other.val, self.der - other.der)
         else:
@@ -62,13 +103,21 @@ class Dual():
     
     def __rsub__(self, other):
         if isinstance(other, float) or isinstance(other, int):
+<<<<<<< HEAD
             return Dual(other-self.val, -self.der )     
+=======
+            return Dual(other-self.val, -self.der )
+>>>>>>> 8186e21d57c797ca96cc703786f82db75ecaa4d7
         else:
             raise TypeError     
             
     def __pow__(self, other):
         if isinstance(other, float) or isinstance(other, int):
+<<<<<<< HEAD
             return Dual(self.val ** other, other * self.val ** (other-1) * self.der)   
+=======
+            return Dual(self.val ** other, other * self.val ** (other-1) * self.der)
+>>>>>>> 8186e21d57c797ca96cc703786f82db75ecaa4d7
         elif isinstance(other, Dual):
             return Dual(self.val ** other.val, self.val ** other.val * (other.der * math.log(self.val) + other.val / self.val * self.der))
         else:
@@ -76,7 +125,11 @@ class Dual():
     
     def __rpow__(self, other):
         if isinstance(other, float) or isinstance(other, int):
+<<<<<<< HEAD
             return Dual(other ** self.val, self.der * math.log(other) )     
+=======
+            return Dual(other ** self.val, self.der * math.log(other) )
+>>>>>>> 8186e21d57c797ca96cc703786f82db75ecaa4d7
         
 def sin(other):
     if isinstance(other, float) or isinstance(other, int):
@@ -180,7 +233,23 @@ def exp(other):
     elif isinstance(other, Dual):
         return Dual(math.exp(other.val), math.exp(other.val) * other.der)
     else:
-        raise TypeError             
+        raise TypeError
+
+def sqrt(other):
+    if isinstance(other, float) or isinstance(other, int):
+        try:
+            return math.sqrt(other)
+        except ValueError:
+            raise ValueError("Attempting to take the square root of negative value.") from None
+    elif isinstance(other, Dual):
+        try:
+            return Dual(math.sqrt(other.val), 1/2 * other.val ** (-1/2) * other.der)
+        except ValueError:
+            raise ValueError("Attempting to take the square root of negative value.") from None
+
+        return (other ** 1/2)
+    else:
+        raise TypeError
 
 # To get the gradient, we need to set different seed for different coordinate and calculate the forward mode for n times where n is the dimension
 def get_gradient(f,dimension,value):
@@ -190,16 +259,27 @@ def get_gradient(f,dimension,value):
     for i in range(dimension):
 
         # Initialize the Dual numbers with the specific seed, the seed should have 1 at the current dimension and 0 in other dimension.
+<<<<<<< HEAD
         Dual_list = []
+=======
+        dual_list = []
+>>>>>>> 8186e21d57c797ca96cc703786f82db75ecaa4d7
 
         # Loop over all the variables to initialize it
         for j in range(dimension):
             # This is the only variable that has 1 as the self.der
             if i == j:
+<<<<<<< HEAD
                 Dual_list.append(Dual(value[j], 1))
             # All other Dual variables should have 0 as the self.der as specified by the seed
             else:
                 Dual_list.append(Dual(value[j], 0))
+=======
+                dual_list.append(Dual(value[j], 1))
+            # All other dual variables should have 0 as the self.der as specified by the seed
+            else:
+                dual_list.append(Dual(value[j], 0))
+>>>>>>> 8186e21d57c797ca96cc703786f82db75ecaa4d7
 
         # Perform Forward Mode
         function = f(*Dual_list)
@@ -207,38 +287,3 @@ def get_gradient(f,dimension,value):
         # Attach this coordinate to the final result
         gradient.append(function.der)
     return gradient
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-        
-        
-        
