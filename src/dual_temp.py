@@ -202,10 +202,20 @@ def exp(other):
         raise TypeError
 
 def sqrt(other):
-    try:
-        return math.sqrt(other)
-    except:
-        raise ValueError("Attempting to take the square root of negative value.")
+    if isinstance(other, float) or isinstance(other, int):
+        try:
+            return math.sqrt(other)
+        except ValueError:
+            raise ValueError("Attempting to take the square root of negative value.") from None
+    elif isinstance(other, Dual):
+        try:
+            return Dual(math.sqrt(other.val), 1/2 * other.val ** (-1/2) * other.der)
+        except ValueError:
+            raise ValueError("Attempting to take the square root of negative value.") from None
+
+        return (other ** 1/2)
+    else:
+        raise TypeError
 
 # To get the gradient, we need to set different seed for different coordinate and calculate the forward mode for n times where n is the dimension
 def get_gradient(f,dimension,value):
