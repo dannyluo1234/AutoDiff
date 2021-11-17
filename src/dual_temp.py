@@ -212,7 +212,6 @@ def sqrt(other):
             return Dual(math.sqrt(other.val), 1/2 * other.val ** (-1/2) * other.der)
         except ValueError:
             raise ValueError("Attempting to take the square root of negative value.") from None
-
         return (other ** 1/2)
     else:
         raise TypeError
