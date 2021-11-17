@@ -51,12 +51,12 @@ def test_mul_rmul():
     y = dual(8, 1)
     f = x*y
     assert f.val == 40, Exception(f"test_mul_rmul has error")
-    assert f.der == 1, Exception(f"test_mul_rmul has error")
+    assert f.der == 13, Exception(f"test_mul_rmul has error")
 
 # test reverse multiplication of two dual numbers
     f_rev = y*x
     assert f_rev.val == 40, Exception(f"test_mul_rmul has error")
-    assert f_rev.der == 1, Exception(f"test_mul_rmul has error")
+    assert f_rev.der == 13, Exception(f"test_mul_rmul has error")
 
 
 # test multiplication of a dual and non-dual number
@@ -64,12 +64,12 @@ def test_mul_rmul():
     y = 3
     f = x*y
     assert f.val == 15, Exception(f"test_mul_rmul has error")
-    assert f.der == 1, Exception(f"test_mul_rmul has error")
+    assert f.der == 3, Exception(f"test_mul_rmul has error")
 
 # test reverse multiplication of a dual and non-dual number
     f_rev = y*x
     assert f_rev.val == 15, Exception(f"test_mul_rmul has error")
-    assert f_rev.der == 1, Exception(f"test_mul_rmul has error")
+    assert f_rev.der == 3, Exception(f"test_mul_rmul has error")
 
 # test multiplication of x and x**2
     x = dual(5,1)
@@ -101,7 +101,7 @@ def test_sub_rsub():
 
 # test reverse subtraction between a dual and non-dual number
     f_rev = y-x
-    assert f_rev.val == 2, Exception(f"test_sub_rsub has error")
+    assert f_rev.val == -2, Exception(f"test_sub_rsub has error")
     assert f_rev.der == 1, Exception(f"test_sub_rsub has error")
 
 # test subtraction between x and x**2
