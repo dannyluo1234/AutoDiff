@@ -332,6 +332,21 @@ def test_exp():
     assert f.val == pytest.approx(math.exp(2), tolerance), Exception(f"test_exp has error")
     assert f.der == pytest.approx(math.exp(2),tolerance), Exception(f"test_exp has error")
 
+def test_sqrt():
+    x = Dual(4, 2)
+    y = Dual(-1)
+    a = 1.21
+    b = (-1)
+    f1 = sqrt(x)
+    assert f1.val == pytest.approx(np.sqrt(4), tolerance), Exception(f"test_sqrt has error for Dual class")
+    assert f1.der == pytest.approx(0.5, tolerance), Exception(f"test_sqrt has error for the derivative for Dual class")
+    with pytest.raises(ValueError):
+        f2 = sqrt(y)
+    f3 = sqrt(a)
+    assert f3 == pytest.approx(np.sqrt(1.21), tolerance), Exception(f"test_sqrt has error for real number")
+    with pytest.raises(ValueError):
+        f4 = sqrt(b)
+
 
 def func(x, y, z):
         return sin(x) + y**3 + x*z
