@@ -5,11 +5,14 @@ Group members: Diana Feng, Varshini Subhash, Xiaobo Luo, Adriana Trejo-Sheu
 
 Description: This is the final project repo for Group 14 for CS107/AC207 Fall 2021
 
-Badges
-Codecov
+Can test coverage running the test_suite.sh using command:  
 
-markdown
+`bash test_suite.sh`
+or
+`./test_suite.sh`
 
-[![codecov](https://codecov.io/gh/cs107-creativename/cs107-FinalProject/branch/main/graph/badge.svg?token=MRY6K1IADM)](https://codecov.io/gh/cs107-creativename/cs107-FinalProject)
 
-[![Build Status](https://app.travis-ci.com/cs107-creativename/cs107-FinalProject.svg?token=CJ6PEGRvgr7nYehDx63M&branch=main)](https://app.travis-ci.com/cs107-creativename/cs107-FinalProject)
+Coverage Image: 
+
+<img width="605" alt="Screen Shot 2021-11-18 at 4 06 13 PM" src="https://user-images.githubusercontent.com/89878381/142497194-47a0c252-f784-40dd-878e-052a8f56c5ad.png">
+
