@@ -124,6 +124,10 @@ def test_sub_rsub():
     with pytest.raises(TypeError):
         f = x - np.array([0, 4, 9])
 
+    # # test invalid type rsubtraction
+    # with pytest.raises(TypeError):
+    #     f = np.array([0, 4, 9]) - Dual(5)
+
 
 def test_div_rdiv():
     # test division between a Dual number and non-Dual number
@@ -152,6 +156,10 @@ def test_div_rdiv():
     # test invalid type division
     with pytest.raises(TypeError):
         f = x / np.array([0, 4, 9])
+
+    # # test invalid type rdivision
+    # with pytest.raises(TypeError):
+    #     f = np.array([0, 4, 9]) / y
 
 
 def test_pow_rpow():
@@ -387,9 +395,12 @@ def test_sinh():
 def test_exp():
     # test exp with a Dual number
     x = Dual(2, 1)
-    f = exp(x)
-    assert f.val == pytest.approx(math.exp(2), tolerance), Exception(f"test_exp has error")
-    assert f.der == pytest.approx(math.exp(2),tolerance), Exception(f"test_exp has error")
+    a = 2
+    f1 = exp(x)
+    assert f1.val == pytest.approx(math.exp(2), tolerance), Exception(f"test_exp has error")
+    assert f1.der == pytest.approx(math.exp(2),tolerance), Exception(f"test_exp has error")
+    f2 = exp(a)
+    assert f2 == pytest.approx(math.exp(2), tolerance), Exception(f"test_exp has error for real number")
 
     # test invalid type exponential
     with pytest.raises(TypeError):
@@ -400,6 +411,7 @@ def test_sqrt():
     y = Dual(-1)
     a = 1.21
     b = (-1)
+    c = np.array([0, 4, 9])
 
     # test sqrt on a simple Dual number
     f1 = sqrt(x)
@@ -417,6 +429,10 @@ def test_sqrt():
     # test sqrt on a negative real number
     with pytest.raises(ValueError):
         f4 = sqrt(b)
+
+    # test invalid type for sqrt
+    with pytest.raises(TypeError):
+        f = sqrt(np.array([0, 4, 9]))
 
 
 def func(x, y, z):
