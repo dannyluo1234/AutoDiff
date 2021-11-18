@@ -14,4 +14,5 @@ or
 
 Coverage Image: 
 
-/Users/adrianatrejo-sheu/Desktop/Screen Shot 2021-11-18 at 4.06.13 PM.png
+<img width="605" alt="Screen Shot 2021-11-18 at 4 06 13 PM" src="https://user-images.githubusercontent.com/89878381/142497194-47a0c252-f784-40dd-878e-052a8f56c5ad.png">
+
