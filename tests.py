@@ -124,9 +124,9 @@ def test_sub_rsub():
     with pytest.raises(TypeError):
         f = x - np.array([0, 4, 9])
 
-    # # test invalid type rsubtraction
-    # with pytest.raises(TypeError):
-    #     f = np.array([0, 4, 9]) - Dual(5)
+    # test invalid type rsubtraction
+    with pytest.raises(TypeError):
+        f = "3" - x
 
 
 def test_div_rdiv():
@@ -157,9 +157,9 @@ def test_div_rdiv():
     with pytest.raises(TypeError):
         f = x / np.array([0, 4, 9])
 
-    # # test invalid type rdivision
-    # with pytest.raises(TypeError):
-    #     f = np.array([0, 4, 9]) / y
+    # test invalid type rdivision
+    with pytest.raises(TypeError):
+        f = "3" / y
 
 
 def test_pow_rpow():
