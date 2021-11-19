@@ -161,6 +161,13 @@ def test_div_rdiv():
     with pytest.raises(TypeError):
         f = "3" / y
 
+def test_neg():
+    # test between two Dual numbers
+    x = Dual(2, 1)
+    f = -x
+    assert f.val == -2, Exception(f"test_neg has wrong value")
+    assert f.der == -1, Exception(f"test_neg has wrong value")
+
 
 def test_pow_rpow():
     # test between two Dual numbers

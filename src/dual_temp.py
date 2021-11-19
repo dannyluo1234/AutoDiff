@@ -96,6 +96,9 @@ class Dual():
     def __rpow__(self, other):
         if isinstance(other, float) or isinstance(other, int):
             return Dual(other ** self.val, other ** self.val * self.der * math.log(other) )
+
+    def __neg__(self):
+        return self.__mul__(-1)
         
 def sin(other):
     if isinstance(other, float) or isinstance(other, int):
