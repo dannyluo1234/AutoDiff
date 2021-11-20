@@ -96,52 +96,9 @@ class Dual():
     def __rpow__(self, other):
         if isinstance(other, float) or isinstance(other, int):
             return Dual(other ** self.val, other ** self.val * self.der * math.log(other) )
-        else:
-            raise TypeError
 
     def __neg__(self):
         return self.__mul__(-1)
-    
-    def __lt__(self, other):
-        if isinstance(other, float) or isinstance(other, int):
-            return self.val < other
-        elif isinstance(other, Dual):
-            return self.val < other.val
-        else:
-            raise TypeError
-
-    def __gt__(self, other):
-        if isinstance(other, float) or isinstance(other, int):
-            return self.val > other
-        elif isinstance(other, Dual):
-            return self.val > other.val
-        else:
-            raise TypeError
-            
-    def __le__(self, other):
-        if isinstance(other, float) or isinstance(other, int):
-            return self.val <= other
-        elif isinstance(other, Dual):
-            return self.val <= other.val
-        else:
-            raise TypeError    
-
-    def __ge__(self, other):
-        if isinstance(other, float) or isinstance(other, int):
-            return self.val >= other
-        elif isinstance(other, Dual):
-            return self.val >= other.val
-        else:
-            raise TypeError
-
-    def __eq__(self, other):
-        if isinstance(other, Dual):
-            return self.val == other.val and self.der == other.der
-        else:
-            return False
-
-    def __ne__(self, other):
-        return not self.__eq__(other)
         
 def sin(other):
     if isinstance(other, float) or isinstance(other, int):
@@ -258,28 +215,6 @@ def sqrt(other):
             return Dual(math.sqrt(other.val), 1/2 * other.val ** (-1/2) * other.der)
         except ValueError:
             raise ValueError("Attempting to take the square root of negative value.") from None
-    else:
-        raise TypeError
-        
-def log(other, base):
-    if not (isinstance(base, float) or isinstance(base, int)):
-        raise TypeError
-    if isinstance(other, float) or isinstance(other, int):
-        try:
-            return math.log(other,base)
-        except ValueError:
-            raise ValueError("Attempting to take log with negative value.") from None
-    elif isinstance(other, Dual):
-        try:
-            return Dual(math.log(other.val,base), 1 / other.val / math.log(base) * other.der)
-        except ValueError:
-            raise ValueError("Attempting to take log with negative value.") from None
-    else:
-        raise TypeError
-            
-def logistic(other):
-    if isinstance(other, float) or isinstance(other, int) or isinstance(other, Dual):
-        return 1 / (1 + exp(-other))
     else:
         raise TypeError
 
