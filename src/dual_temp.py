@@ -1,13 +1,10 @@
 # -*- coding: utf-8 -*-
 """
 Created on Sat Oct 30 17:47:39 2021
-
 @author: Danny Luo
 """
-
 import math
 import numpy as np
-
 class Dual():
     """
     A dual class that keeps track of the value and derivative of a function for
@@ -15,10 +12,8 @@ class Dual():
     followed by a real number. A direction can also be specified as a second
     argument in order to differentiate towards a specific vector direction.
     For instance,
-
         x = Dual(3)
         y = Dual(4, 2)
-
     Parameters
     ----------
     value : real number
@@ -27,7 +22,6 @@ class Dual():
             Specifies a vector direction to calculate the gradient. The default
             number is 1
     """
-
     def __init__(self, value, direction=1):
         if (isinstance(value, int) or isinstance(value, float)) and (isinstance(direction, int) or isinstance(direction, float)):
             self.val = value
@@ -96,10 +90,53 @@ class Dual():
     def __rpow__(self, other):
         if isinstance(other, float) or isinstance(other, int):
             return Dual(other ** self.val, other ** self.val * self.der * math.log(other) )
+        else:
+            raise TypeError
 
     def __neg__(self):
         return self.__mul__(-1)
-        
+
+    def __lt__(self, other):
+        if isinstance(other, float) or isinstance(other, int):
+            return self.val < other
+        elif isinstance(other, Dual):
+            return self.val < other.val
+        else:
+            raise TypeError
+
+    def __gt__(self, other):
+        if isinstance(other, float) or isinstance(other, int):
+            return self.val > other
+        elif isinstance(other, Dual):
+            return self.val > other.val
+        else:
+            raise TypeError
+
+    def __le__(self, other):
+        if isinstance(other, float) or isinstance(other, int):
+            return self.val <= other
+        elif isinstance(other, Dual):
+            return self.val <= other.val
+        else:
+            raise TypeError    
+
+    def __ge__(self, other):
+        if isinstance(other, float) or isinstance(other, int):
+            return self.val >= other
+        elif isinstance(other, Dual):
+            return self.val >= other.val
+        else:
+            raise TypeError
+
+    def __eq__(self, other):
+        if isinstance(other, Dual):
+            return self.val == other.val and self.der == other.der
+        else:
+            return False
+
+    def __ne__(self, other):
+        return not self.__eq__(other)
+
 def sin(other):
     if isinstance(other, float) or isinstance(other, int):
         return math.sin(other)  
@@ -107,7 +144,6 @@ def sin(other):
         return Dual(math.sin(other.val), math.cos(other.val) * other.der)
     else:
         raise TypeError  
-
 def cos(other):
     if isinstance(other, float) or isinstance(other, int):
         return math.cos(other)  
@@ -115,7 +151,6 @@ def cos(other):
         return Dual(math.cos(other.val), -math.sin(other.val) * other.der)
     else:
         raise TypeError          
-
 def tan(other):
     if isinstance(other, float) or isinstance(other, int):
         return math.tan(other)  
@@ -179,7 +214,6 @@ def arcsinh(other):
         return Dual(np.arcsinh(other.val), (1 / (other.val**2 + 1)**0.5) * other.der)
     else:
         raise TypeError
-
 def arccosh(other):
     if isinstance(other, float) or isinstance(other, int):
         return np.arccosh(other)  
@@ -203,7 +237,6 @@ def exp(other):
         return Dual(math.exp(other.val), math.exp(other.val) * other.der)
     else:
         raise TypeError
-
 def sqrt(other):
     if isinstance(other, float) or isinstance(other, int):
         try:
@@ -218,16 +251,35 @@ def sqrt(other):
     else:
         raise TypeError
 
+def log(other, base):
+    if not (isinstance(base, float) or isinstance(base, int)):
+        raise TypeError
+    if isinstance(other, float) or isinstance(other, int):
+        try:
+            return math.log(other,base)
+        except ValueError:
+            raise ValueError("Attempting to take log with negative value.") from None
+    elif isinstance(other, Dual):
+        try:
+            return Dual(math.log(other.val,base), 1 / other.val / math.log(base) * other.der)
+        except ValueError:
+            raise ValueError("Attempting to take log with negative value.") from None
+    else:
+        raise TypeError
+
+def logistic(other):
+    if isinstance(other, float) or isinstance(other, int) or isinstance(other, Dual):
+        return 1 / (1 + exp(-other))
+    else:
+        raise TypeError
+
 # To get the gradient, we need to set different seed for different coordinate and calculate the forward mode for n times where n is the dimension
 def get_gradient(f,dimension,value):
     gradient = []
-
     # For loop over dimension, each calculating one coordinate of the gradient
     for i in range(dimension):
-
         # Initialize the Dual numbers with the specific seed, the seed should have 1 at the current dimension and 0 in other dimension.
         dual_list = []
-
         # Loop over all the variables to initialize it
         for j in range(dimension):
             # This is the only variable that has 1 as the self.der
@@ -236,10 +288,8 @@ def get_gradient(f,dimension,value):
             # All other dual variables should have 0 as the self.der as specified by the seed
             else:
                 dual_list.append(Dual(value[j], 0))
-
         # Perform Forward Mode
         function = f(*dual_list)
-
         # Attach this coordinate to the final result
         gradient.append(function.der)
     return gradient
