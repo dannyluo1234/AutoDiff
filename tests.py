@@ -1,6 +1,7 @@
 import pytest
 import numpy as np
-from src.dual_temp import *
+from src.Forward import *
+from src.Functions import *
 
 import math
 tolerance = 0.000000001
