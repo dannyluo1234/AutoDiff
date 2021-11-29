@@ -5,7 +5,8 @@ Created on Sat Oct 30 17:47:39 2021
 """
 
 import math
-import numpy as np
+
+
 class Dual():
     """
     A dual class that keeps track of the value and derivative of a function for

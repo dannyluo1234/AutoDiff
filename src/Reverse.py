@@ -7,10 +7,10 @@ Created on Sun Nov 28 16:04:57 2021
 
 import math
 
-class Node:
-    def __init__(self, value):
-        if isinstance(value, int) or isinstance(value, float):
-            self.value = value
+class Node():
+    def __init__(self, val):
+        if isinstance(val, int) or isinstance(val, float):
+            self.val = val
             # children will store tuples of form (a,b) where a is a child and b is  
             # this child's partial derivative
             self.children = []
@@ -27,11 +27,11 @@ class Node:
 
     def __add__(self, other):
         if isinstance(other, float) or isinstance(other, int):
-            new_node = Node(self.value + other)
+            new_node = Node(self.val + other)
             self.children.append((new_node, 1))
             return new_node
         elif isinstance(other, Node):
-            new_node = Node(self.value + other.value)
+            new_node = Node(self.val + other.val)
             self.children.append((new_node, 1))
             other.children.append((new_node, 1))
             return new_node
@@ -43,13 +43,13 @@ class Node:
     
     def __mul__(self, other):
         if isinstance(other, float) or isinstance(other, int):
-            new_node = Node(self.value * other)
+            new_node = Node(self.val * other)
             self.children.append((new_node, other))
             return new_node
         elif isinstance(other, Node):
-            new_node = Node(self.value * other.value)
-            self.children.append((new_node, other.value))
-            other.children.append((new_node, self.value))
+            new_node = Node(self.val * other.val)
+            self.children.append((new_node, other.val))
+            other.children.append((new_node, self.val))
             return new_node
         else:
             raise TypeError
@@ -59,32 +59,32 @@ class Node:
 
     def __truediv__(self, other):
         if isinstance(other, float) or isinstance(other, int):
-            new_node = Node(self.value / other)
+            new_node = Node(self.val / other)
             self.children.append((new_node, 1/other))
             return new_node
         elif isinstance(other, Node):
-            new_node = Node(self.value / other.value)
-            self.children.append((new_node, 1 / other.value))
-            other.children.append((new_node, - self.value / (other.value ** 2)))
+            new_node = Node(self.val / other.val)
+            self.children.append((new_node, 1 / other.val))
+            other.children.append((new_node, - self.val / (other.val ** 2)))
             return new_node
         else:
             raise TypeError       
 
     def __rtruediv__(self, other):
         if isinstance(other, float) or isinstance(other, int):
-            new_node = Node(other / self.value)
-            self.children.append((new_node, - other / (self.value ** 2)))
+            new_node = Node(other / self.val)
+            self.children.append((new_node, - other / (self.val ** 2)))
             return new_node
         else:
             raise TypeError  
 
     def __sub__(self, other):
         if isinstance(other, float) or isinstance(other, int):
-            new_node = Node(self.value - other)
+            new_node = Node(self.val - other)
             self.children.append((new_node, 1))
             return new_node
         elif isinstance(other, Node):
-            new_node = Node(self.value - other.value)
+            new_node = Node(self.val - other.val)
             self.children.append((new_node, 1))
             other.children.append((new_node, -1))
             return new_node
@@ -93,7 +93,7 @@ class Node:
     
     def __rsub__(self, other):
         if isinstance(other, float) or isinstance(other, int):
-            new_node = Node(other - self.value)
+            new_node = Node(other - self.val)
             self.children.append((new_node, -1))
             return new_node
         else:
@@ -101,21 +101,21 @@ class Node:
             
     def __pow__(self, other):
         if isinstance(other, float) or isinstance(other, int):
-            new_node = Node(self.value ** other)
-            self.children.append((new_node, other * self.value ** (other-1)))
+            new_node = Node(self.val ** other)
+            self.children.append((new_node, other * self.val ** (other-1)))
             return new_node        
         elif isinstance(other, Node):
-            new_node = Node(self.value ** other.value)
-            self.children.append((new_node, other.value * self.value ** (other.value-1)))
-            other.children.append((new_node, self.value ** other.value * math.log(other.value)))
+            new_node = Node(self.val ** other.val)
+            self.children.append((new_node, other.val * self.val ** (other.val-1)))
+            other.children.append((new_node, self.val ** other.val * math.log(other.val)))
             return new_node       
         else:
             raise TypeError         
     
     def __rpow__(self, other):
         if isinstance(other, float) or isinstance(other, int):
-            new_node = Node(other ** self.value)
-            self.children.append((new_node, other ** self.value * math.log(other)))
+            new_node = Node(other ** self.val)
+            self.children.append((new_node, other ** self.val * math.log(other)))
             return new_node 
         else:
             raise TypeError
@@ -125,39 +125,39 @@ class Node:
 
     def __lt__(self, other):
         if isinstance(other, float) or isinstance(other, int):
-            return self.value < other
+            return self.val < other
         elif isinstance(other, Node):
-            return self.value < other.value
+            return self.val < other.val
         else:
             raise TypeError
 
     def __gt__(self, other):
         if isinstance(other, float) or isinstance(other, int):
-            return self.value > other
+            return self.val > other
         elif isinstance(other, Node):
-            return self.value > other.value
+            return self.val > other.val
         else:
             raise TypeError
 
     def __le__(self, other):
         if isinstance(other, float) or isinstance(other, int):
-            return self.value <= other
+            return self.val <= other
         elif isinstance(other, Node):
-            return self.value <= other.value
+            return self.val <= other.val
         else:
             raise TypeError    
 
     def __ge__(self, other):
         if isinstance(other, float) or isinstance(other, int):
-            return self.value >= other
+            return self.val >= other
         elif isinstance(other, Node):
-            return self.value >= other.value
+            return self.val >= other.val
         else:
             raise TypeError
 
     def __eq__(self, other):
         if isinstance(other, Node):
-            return self.value == other.value and self.der == other.der and self.children == other.children
+            return self.val == other.val and self.der == other.der and self.children == other.children
         else:
             return False
 

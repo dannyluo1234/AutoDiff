@@ -5,8 +5,8 @@ Created on Sun Nov 28 18:19:36 2021
 @author: Danny Luo
 """
 
-from src.Forward import Dual
-from src.Reverse import Node
+from Forward import Dual
+from Reverse import Node
 import math
 import numpy as np
 
