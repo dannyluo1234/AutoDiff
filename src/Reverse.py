@@ -6,6 +6,7 @@ Created on Sun Nov 28 16:04:57 2021
 """
 
 import math
+from inspect import signature
 
 class Node():
     def __init__(self, val):
@@ -24,6 +25,12 @@ class Node():
         else:
             self.der = sum([child.get_gradient() * partial for child, partial in self.children])
             return self.der
+
+    def clear(self, value=None):
+        if value is not None:
+            self.value = value
+            self.children=[]
+        self.der = None
 
     def __add__(self, other):
         if isinstance(other, float) or isinstance(other, int):
@@ -166,7 +173,7 @@ class Node():
             
 
     # using reverse pass to calculate the gradient of specific variables
-    def AutoDiffR(self, variables):
+    def _AutoDiffR(self, variables):
         self.der = 1
         result = []
         for var in variables:
@@ -181,6 +188,32 @@ class Node():
             var_grad = var.get_gradient()
             result.append(var_grad)
         return result
+
+# One dimensional case wher f: R^n to R
+def AutoDiffR1D(f, val):
+    try:
+        dimension = len(signature(f).parameters)
+    except:
+        raise TypeError("the first argument must be a function")
+        
+    if dimension != len(val):
+        raise Exception("provided value doesn't match the input dimension of f")
+    
+    variables = [Node(val[i]) for i in range(dimension)]
+    result = f(*variables)        
+    return result._AutoDiffR(variables)
+
+# General Case, f_list could be a list of functions
+def AutoDiffR(f_list, val_list):
+    if isinstance(f_list, list):
+        results = []
+        if len(f_list) != len(val_list):
+            raise Exception("function list length doesn't match value list length")
+        for f, val in zip(f_list, val_list):
+            results.append(AutoDiffR1D(f, val))
+        return results
+    else:
+        return AutoDiffR1D(f_list, val_list)
         
 
 

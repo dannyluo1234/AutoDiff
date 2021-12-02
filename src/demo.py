@@ -30,12 +30,19 @@ print(f.val, f.der)
 # Calculating gradient, note that the sin function is the ones we define
 def f(x, y, z):
     return sin(x) + y**3 + x*z
-print(get_gradient(f, 3, [1,3,2]))
+
+# Calculating gradient using forward mode
+print(AutoDiffF(f, [1,3,2]))
 
 # Calculating gradient using reverse mode
-x = Node(1)
-y = Node(3)
-z = Node(2)
-f = sin(x) + y**3 + x*z
-print(f.AutoDiffR([x,y,z]))
-print(f.AutoDiffR([x]))
+print(AutoDiffR(f, [1,3,2]))
+
+# Define a new function to illustrate multiple functions
+def g(x, y, z):
+    return logistic(x) + arctan(y*sin(x)) + x*tan(z)
+
+# Calculating gradient using forward mode
+print(AutoDiffF([f,g], [[1,3,2],[5,0,-2]]))
+
+# Calculating gradient using reverse mode
+print(AutoDiffR([f,g], [[1,3,2],[5,0,-2]]))    

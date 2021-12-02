@@ -5,7 +5,7 @@ Created on Sat Oct 30 17:47:39 2021
 """
 
 import math
-
+from inspect import signature
 
 class Dual():
     """
@@ -142,7 +142,16 @@ class Dual():
 
 
 # To get the gradient, we need to set different seed for different coordinate and calculate the forward mode for n times where n is the dimension
-def get_gradient(f,dimension,value):
+# This is the 1D version that will be called
+def AutoDiffF1D(f, val):
+    try:
+        dimension = len(signature(f).parameters)
+    except:
+        raise TypeError("the first argument must be a function")
+
+    if dimension != len(val):
+        raise Exception("provided value doesn't match the input dimension of f")
+        
     gradient = []
     # For loop over dimension, each calculating one coordinate of the gradient
     for i in range(dimension):
@@ -152,12 +161,24 @@ def get_gradient(f,dimension,value):
         for j in range(dimension):
             # This is the only variable that has 1 as the self.der
             if i == j:
-                dual_list.append(Dual(value[j], 1))
+                dual_list.append(Dual(val[j], 1))
             # All other dual variables should have 0 as the self.der as specified by the seed
             else:
-                dual_list.append(Dual(value[j], 0))
+                dual_list.append(Dual(val[j], 0))
         # Perform Forward Mode
         function = f(*dual_list)
         # Attach this coordinate to the final result
         gradient.append(function.der)
     return gradient
+
+# General Case, f_list could be a list of functions
+def AutoDiffF(f_list, val_list):
+    if isinstance(f_list, list):
+        results = []
+        if len(f_list) != len(val_list):
+            raise Exception("function list length doesn't match value list length")
+        for f, val in zip(f_list, val_list):
+            results.append(AutoDiffF1D(f, val))
+        return results
+    else:
+        return AutoDiffF1D(f_list, val_list)
