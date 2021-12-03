@@ -1,7 +1,10 @@
 import pytest
 import numpy as np
-from src.Forward import *
-from src.Functions import *
+import sys
+sys.path.append('../src/cs107_creativename')
+from Forward import *
+from Functions import *
+from Reverse import *
 
 import math
 tolerance = 0.000000001
@@ -443,12 +446,11 @@ def test_sqrt():
         f = sqrt(np.array([0, 4, 9]))
 
 
-def func(x, y, z):
-        return sin(x) + y**3 + x*z
+func = lambda x,y,z: x**2 + 2*y + sin(z)
 
 
 # test gradient computation
-def test_gradient():
-    grad1 = get_gradient(func, 3, [1,2,3])
+def test_AutoDiffF1D():
+    grad1 = AutoDiffF1D(func, [1,2,3])
    
 
