@@ -1,4 +1,5 @@
 __pycache__/
 .DS_Store
 .coverage
+cs107_creativename.egg-info/
 .ipynb_checkpoints/
