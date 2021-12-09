@@ -1,10 +1,8 @@
 import pytest
 import numpy as np
 import sys
-sys.path.append('../src/cs107_creativename')
-from Forward import *
-from Functions import *
-from Reverse import *
+
+from cs107_creativename import *
 
 import math
 tolerance = 0.000000001
