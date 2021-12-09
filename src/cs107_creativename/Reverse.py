@@ -26,12 +26,6 @@ class Node():
             self.der = sum([child.get_gradient() * partial for child, partial in self.children])
             return self.der
 
-    def clear(self, value=None):
-        if value is not None:
-            self.value = value
-            self.children=[]
-        self.der = None
-
     def __add__(self, other):
         if isinstance(other, float) or isinstance(other, int):
             new_node = Node(self.val + other)
