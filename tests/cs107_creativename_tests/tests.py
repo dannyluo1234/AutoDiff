@@ -677,3 +677,18 @@ def test_Reverse_sin():
     f = sin(x)
     assert f.val == pytest.approx(math.sin(2), tolerance), Exception(f"test_Reverse_sin has error")
     assert x.children == pytest.approx([(f,math.cos(2))],tolerance), Exception(f"test_Reverse_sin has error")
+
+def test_Reverse_cos():
+    # test cos with a Node
+    x = Node(2)
+    f = cos(x)
+    assert f.val == pytest.approx(math.cos(2), tolerance), Exception(f"test_Reverse_cos has error")
+    assert x.children == pytest.approx([(f,-math.sin(2))],tolerance), Exception(f"test_Reverse_cos has error")
+
+
+def test_Reverse_tan():
+    # test tan with a Node
+    x = Node(2)
+    f = tan(x)
+    assert f.val == pytest.approx(math.tan(2), tolerance), Exception(f"test_Reverse_tan has error")
+    assert x.children == pytest.approx([(f,1/(math.cos(2)**2))],tolerance), Exception(f"test_Reverse_tan has error")
