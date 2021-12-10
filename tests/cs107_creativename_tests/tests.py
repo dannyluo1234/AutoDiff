@@ -8,6 +8,8 @@ import math
 tolerance = 0.000000001
 
 
+#####################################################################################
+# Tests for Forward.py, Functions with Dual & init file using Forward
 def test_Forward_init():
     with pytest.raises(TypeError):
         x = Dual("Here is a string")
@@ -485,6 +487,9 @@ def test_AutoDiff():
     assert grad1[1] == pytest.approx([2 * 1+4, 1*np.log(1)-4, 1/np.cos(4)**2], tolerance), Exception(f"test_AutoDiffF has error")
     
     
+ #####################################################################################
+# Tests for Reverse.py, Functions with Node & init file using Reverse
+    
 def test_Reverse_init():
     with pytest.raises(TypeError):
         x = Node("Here is a string")
@@ -524,6 +529,147 @@ def test_Reverse_add_radd():
    with pytest.raises(TypeError):
        x = Node(5)
        f = x + np.array([0, 4, 9])
+       
+       
+def test_Reverse_sub_rsub():
+   # test subtraction of two Nodes
+   x = Node(5)
+   y = Node(3)
+   f = x - y
+   assert f.val == 2, Exception(f"test_Reverse_sub_rsub has error in value with two Nodes")
+   assert x.children == [(f,1)], Exception(f"test_Reverse_add_radd has error in first node's children")
+   assert y.children == [(f,-1)], Exception(f"test_Reverse_add_radd has error in second node's children")
+   
+
+   # test reverse subtraction of a Node and non-Node number
+   x = 5
+   y = Node(3)
+   f = y-x
+   assert f.val == -2, Exception(f"test_Reverse_sub_rsub has error in value with Node and non-node")
+   assert y.children == [(f,1)], Exception(f"test_Reverse_sub_rsub has error in second node's children")
+
+
+   # test subtraction of a Node and non-Node number
+   x = 5
+   y = Node(3)
+   f = x-y
+   assert f.val == 2, Exception(f"test_Reverse_sub_rsub has error in value with Node and non-node")
+   assert y.children == [(f,-1)], Exception(f"test_Reverse_sub_rsub has error in second node's children")
+
+
+   # test invalid type addition
+   with pytest.raises(TypeError):
+       x = Node(5)
+       f = x - np.array([0, 4, 9])
+       
+       
+def test_Reverse_mul_rmul():
+   # test subtraction of two Nodes
+   x = Node(5)
+   y = Node(3)
+   f = x * y
+   assert f.val == 15, Exception(f"test_Reverse_mul_rmul has error in value with two Nodes")
+   assert x.children == [(f,3)], Exception(f"test_Reverse_mul_rmul has error in first node's children")
+   assert y.children == [(f,5)], Exception(f"test_Reverse_mul_rmul has error in second node's children")
+   
+
+   # test reverse multiplication of a Node and non-Node number
+   x = 5
+   y = Node(3)
+   f = y*x
+   assert f.val == 15, Exception(f"test_Reverse_mul_rmul has error in value with Node and non-node")
+   assert y.children == [(f,5)], Exception(f"test_Reverse_mul_rmul has error in second node's children")
+
+
+   # test multiplication of a Node and non-Node number
+   x = 5
+   y = Node(3)
+   f = x*y
+   assert f.val == 15, Exception(f"test_Reverse_mul_rmul has error in value with Node and non-node")
+   assert y.children == [(f,5)], Exception(f"test_Reverse_mul_rmul has error in second node's children")
+
+
+   # test invalid type addition
+   with pytest.raises(TypeError):
+       x = Node(5)
+       f = x*np.array([0, 4, 9])
+       
+       
+def test_Reverse_truediv_rtruediv():
+   # test subtraction of two Nodes
+   x = Node(6)
+   y = Node(3)
+   f = x/y
+   assert f.val == 2, Exception(f"test_Reverse_truediv_rtruediv has error in value with two Nodes")
+   assert x.children == [(f,1/3)], Exception(f"test_Reverse_truediv_rtruediv has error in first node's children")
+   assert y.children == [(f,-6/9)], Exception(f"test_Reverse_truediv_rtruediv has error in second node's children")
+   
+
+   # test reverse division of a Node and non-Node number
+   x = 6
+   y = Node(3)
+   f = y/x
+   assert f.val == 0.5, Exception(f"test_Reverse_truediv_rtruediv has error in value with Node and non-node")
+   assert y.children == [(f,1/6)], Exception(f"test_Reverse_truediv_rtruediv has error in second node's children")
+
+
+   # test division of a Node and non-Node number
+   x = 6
+   y = Node(3)
+   f = x/y
+   assert f.val == 2, Exception(f"test_Reverse_truediv_rtruediv has error in value with Node and non-node")
+   assert y.children == [(f,-6/9)], Exception(f"test_Reverse_truediv_rtruediv has error in second node's children")
+
+
+   # test invalid type addition
+   with pytest.raises(TypeError):
+       x = Node(5)
+       f = x/np.array([0, 4, 9])
+       
+       
+def test_Reverse_pow_rpow():
+   # test power of two Nodes
+   x = Node(2)
+   y = Node(3)
+   f = x**y
+   assert f.val == 8, Exception(f"test_Reverse_pow_rpow has error in value with two Nodes")
+   assert x.children == [(f,12)], Exception(f"test_Reverse_pow_rpow has error in first node's children")
+   assert y.children == [(f,2**3*math.log(3))], Exception(f"test_Reverse_pow_rpow has error in second node's children")
+   
+
+   # test reverse power of a Node and non-Node number
+   x = 2
+   y = Node(3)
+   f = y**x
+   assert f.val == 9, Exception(f"test_Reverse_pow_rpow has error in value with Node and non-node")
+   assert y.children == [(f,6)], Exception(f"test_Reverse_pow_rpow has error in second node's children")
+
+
+   # test power of a Node and non-Node number
+   x = 2
+   y = Node(3)
+   f = x**y
+   assert f.val == 8, Exception(f"test_Reverse_pow_rpow has error in value with Node and non-node")
+   assert y.children == [(f,3*2**2)], Exception(f"test_Reverse_pow_rpow has error in second node's children")
+
+
+   # test invalid type addition
+   with pytest.raises(TypeError):
+       x = Node(5)
+       f = x**np.array([0, 4, 9])
+       
+       
+def test_Reverse_neg():
+    # test between two Dual numbers
+    x = Node(2)
+    f = -x
+    assert f.val == -2, Exception(f"test_Reverse_neg has wrong value")
+
+
+
+       
+       
+       
 
 def test_Reverse_sin():
     # test sin with a Node 
