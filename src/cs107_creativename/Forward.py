@@ -13,18 +13,30 @@ class Dual():
     automatic differentiation. It should be initiated by calling the class
     followed by a real number. A direction can also be specified as a second
     argument in order to differentiate towards a specific vector direction.
-    For instance,
-        x = Dual(3)
-        y = Dual(4, 2)
+
     Parameters
     ----------
     value : real number
-            First argument
+            First argument, a value at which the function should be evaluated.
     direction : real number, optional
             Specifies a vector direction to calculate the gradient. The default
             number is 1
+
+    Returns
+    ----------
+    Dual
+        Returns a Dual class object with a value (val) and a derivative (der).
+
+    Examples
+    ----------
+    >>> x = Dual(3)
+    >>> y = Dual(4, 2)
     """
     def __init__(self, value, direction=1):
+        """
+        Intialize a Dual class object
+        """
+
         if (isinstance(value, int) or isinstance(value, float)) and (isinstance(direction, int) or isinstance(direction, float)):
             self.val = value
             self.der = direction
@@ -32,6 +44,22 @@ class Dual():
             raise TypeError
         
     def __add__(self, other):
+        """
+        Add a Dual class object with a real number or another Dual class object
+
+        Returns
+        ----------
+        Dual
+            Returns a Dual class object representating the addition result
+
+        Examples
+        ----------
+        >>> x = Dual(3)
+        >>> y = Dual(4)
+        >>> f = x + y
+        >>> print(f) # Value:7, Derivative: 2
+
+        """
         if isinstance(other, float) or isinstance(other, int):
             return Dual(self.val + other, self.der)
         elif isinstance(other, Dual):
@@ -138,6 +166,12 @@ class Dual():
 
     def __ne__(self, other):
         return not self.__eq__(other)
+
+    def __str__(self):
+        return (f'Value: {self.val}, Derivative: {self.der}')
+
+    def __repr__(self):
+        return (f'Dual({self.val}, {self.der})')
 
 
 
