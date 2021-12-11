@@ -424,6 +424,123 @@ def test_Forward_exp():
     # test invalid type exponential
     with pytest.raises(TypeError):
         f = exp(np.array([0, 4, 9]))
+        
+        
+def test_Forward_lt():
+    # test between a Dual number and a non-Dual number
+    x = 2
+    y = Dual(3)
+    f = x < y.val
+    f1 = x > y.val
+    assert f == True , Exception(f"test_Forward_lt has wrong value")
+    assert f1 == False , Exception(f"test_Forward_lt has wrong value")
+    
+       
+    # test between two Dual numbers
+    x = Dual(2)
+    y = Dual(3)
+    f = x.val < y.val
+    f1 = y.val < x.val
+    assert f == True, Exception(f"test_Forward_lt has wrong value")
+    assert f1 == False, Exception(f"test_Forward_lt has wrong value")
+    
+    #test invalid type
+    x = Dual(2)
+    y = 'string'
+    with pytest.raises(TypeError):
+        x.val < y
+    
+    
+def test_Forward_le():
+    # test between a Dual number and a non-Dual number
+    x = 2
+    y = Dual(3)
+    f = x <= y.val
+    f1 = y.val <= x
+    assert f == True, Exception(f"test_Forward_le has wrong value")
+    assert f1 == False, Exception(f"test_Forward_le has wrong value")
+       
+    # test between two Dual numbers
+    x = Dual(2)
+    y = Dual(3)
+    f = x.val <= y.val
+    f1 = y.val <= x.val
+    assert f == True, Exception(f"test_Forward_le has wrong value")
+    assert f1 == False, Exception(f"test_Forward_le has wrong value")
+    
+    
+    #test invalid type
+    x = Dual(2)
+    y = 'string'
+    with pytest.raises(TypeError):
+        x.val < y
+    
+    
+def test_Forward_gt():
+    # test between a Dual number and a non-Dual number
+    x = 3
+    y = Dual(1)
+    f = x > y.val
+    f1 = y.val > x
+    assert f == True, Exception(f"test_Forward_gt has wrong value")
+    assert f1 == False, Exception(f"test_Forward_gt has wrong value")
+    
+    # test between two Dual numbers
+    x = Dual(3)
+    y = Dual(1)
+    f = x.val > y.val
+    f1 = y.val > x.val
+    assert f == True, Exception(f"test_Forward_gt has wrong value")
+    assert f1 == False, Exception(f"test_Forward_gt has wrong value")
+    
+    #test invalid type
+    x = Dual(2)
+    y = 'string'
+    with pytest.raises(TypeError):
+        x.val > y
+    
+    
+    
+def test_Forward_ge():
+    # test between a Dual number and a non-Dual number
+    x = 3
+    y = Dual(1)
+    f = x >= y.val
+    f1 = y.val >= x
+    assert f == True, Exception(f"test_Forward_ge has wrong value")
+    assert f1 == False, Exception(f"test_Forward_ge has wrong value")
+       
+    # test between two Dual numbers
+    x = Dual(3)
+    y = Dual(1)
+    f = x.val >= y.val
+    f1 = y.val >= x.val
+    assert f == True, Exception(f"test_Forward_ge has wrong value")
+    assert f1 == False, Exception(f"test_Forward_ge has wrong value")
+
+    
+    #test invalid type
+    x = Dual(2)
+    y = 'string'
+    with pytest.raises(TypeError):
+        x.val >= y
+    
+    
+def test_Forward_eq():
+    # test between two Dual numbers
+    x = Dual(2)
+    y = Dual(2)
+    assert x.val == y.val, Exception(f"test_Forward_eq has wrong value")
+    assert x.der == y.der, Exception(f"test_Forward_eq has wrong derivative")
+    
+    
+
+
+def test_Forward_ne():
+    # test between two Dual numbers
+    x = Dual(2)
+    y = Dual(3)
+    assert x.val is not y.val, Exception(f"test_Forward_ne has wrong value")
 
 def test_Forward_sqrt():
     x = Dual(4, 2)
