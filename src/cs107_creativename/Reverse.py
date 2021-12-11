@@ -9,7 +9,36 @@ import math
 from inspect import signature
 
 class Node():
+    """
+    A Node class that keeps track of the current value and derivative of a
+    variable in a function or function set, as well as the pointers to all of
+    the Nodes that depend on it (i.e. its "children").
+    It should be initiated by calling the class followed by a real number.
+
+    Parameters
+    ----------
+    val : real number
+          The current value of the Node. Has to be defined at instantiation.
+    der : real number
+          The current derivative of the Node
+    children : a list of tuples, each tuple representing a child
+               The first value in the tuple is a pointer to the child node, and
+               the second value in the pointer is its current partial derivative
+
+    Returns
+    ----------
+    Node
+        Returns a Node class object
+
+    Examples
+    ----------
+    >>> x = Node(3)
+    """
     def __init__(self, val):
+        """
+        Intialize a Dual class object with an empty list of children and
+        no derivative value.
+        """
         if isinstance(val, int) or isinstance(val, float):
             self.val = val
             # children will store tuples of form (a,b) where a is a child and b is  
@@ -20,6 +49,11 @@ class Node():
             raise TypeError
     
     def get_gradient(self):
+        """
+        Returns the current derivative of a node. If the dertivative is None,
+        update the derivative to a sum of all of its children's partial
+        derivatives and return that value.
+        """
         if self.der is not None:
             return self.der
         else:
