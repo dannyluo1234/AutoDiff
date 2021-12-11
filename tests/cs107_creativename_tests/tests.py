@@ -908,7 +908,7 @@ def test_Reverse_cos():
 
 
 def test_Reverse_tan():
-    # test tan with a Node
+    # test tan with a Node number
     x = Node(2)
     f = tan(x)
     assert f.val == pytest.approx(math.tan(2), tolerance), Exception(f"test_Reverse_tan has error")
@@ -932,11 +932,38 @@ def test_Reverse_arccos():
 
 
 def test_Reverse_arctan():
-    # test arctan with a Dual number
+    # test arctan with a Node number
     x = Node(0.5)
     f = arctan(x)
     assert f.val == pytest.approx(np.arctan(0.5), tolerance), Exception(f"test_Reverse_arctan has error")
-    assert x.children == pytest.approx([(f, 0.8)], tolerance), Exception(f"test_Forward_arctan has error")
+    assert x.children == pytest.approx([(f, 0.8)], tolerance), Exception(f"test_Reverse_arctan has error")
+
+
+
+def test_Reverse_arctanh():
+    # test arctanh with a Node number
+    x = Node(0.5)
+    f = arctanh(x)
+    assert f.val == pytest.approx(np.arctanh(0.5), tolerance), Exception(f"test_Reverse_arctanh has error")
+    assert x.children == pytest.approx([(f, 1/0.75)],tolerance), Exception(f"test_Reverse_arctanh has error")
+
+
+
+def test_Reverse_arccosh():
+    # test arccosh with a Node number
+    x = Node(2)
+    f = arccosh(x)
+    assert f.val == pytest.approx(np.arccosh(2), tolerance), Exception(f"test_Reverse_arccosh has error")
+    assert x.children == pytest.approx([(f, 1/np.sqrt(3))],tolerance), Exception(f"test_Reverse_arccosh has error")
+
+
+def test_Reverse_arcsinh():
+    # test arcsinh with a Node number
+    x = Node(2)
+    f = arcsinh(x)
+    assert f.val == pytest.approx(np.arcsinh(2), tolerance), Exception(f"test_Reverse_arcsinh has error")
+    assert x.children == pytest.approx([(f, 1/np.sqrt(5))], tolerance), Exception(f"test_Reverse_arcsinh has error")
+
     
 # test AutoDiffR1D
 def test_AutoDiffR1D():
@@ -969,4 +996,3 @@ def test_AutoDiffR():
     grad1 = AutoDiffR([func, func2], [[1,2,3],[1,2,4]])  
     assert grad1[0] == pytest.approx([2, 2, np.cos(3)], tolerance), Exception(f"test_AutoDiffF has error")
     assert grad1[1] == pytest.approx([2 * 1+4, 1*np.log(1)-4, 1/np.cos(4)**2], tolerance), Exception(f"test_AutoDiffF has error")
-    
