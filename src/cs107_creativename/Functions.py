@@ -51,7 +51,7 @@ def cos(other):
     >>> x = Dual(np.pi)
     >>> y = Node(np.pi)
     >>> print(cos(x)) # Dual(-1.0, -1.2246467991473532e-16)
-    >>> print(cos(y)) # -1.0
+    >>> print(cos(y)) # Node(-1.0, None, [])
     >>> print(cos(np.pi)) # -1.0
     """
     if isinstance(other, float) or isinstance(other, int):
@@ -77,8 +77,8 @@ def tan(other):
     ----------
     >>> x = Dual(0)
     >>> y = Node(0)
-    >>> print(tan(x).val) # 0.0
-    >>> print(tan(y).val) # 0.0
+    >>> print(tan(x)) # Dual(0.0, 1.0)
+    >>> print(tan(y)) # Node(0.0, None, [])
     >>> print(tan(0)) # 0.0
     """
     if isinstance(other, float) or isinstance(other, int):
@@ -105,8 +105,8 @@ def arcsin(other):
     ----------
     >>> x = Dual(0)
     >>> y = Node(0)
-    >>> print(arcsin(x).val) # 0.0
-    >>> print(arcsin(y).val) # 0.0
+    >>> print(arcsin(x)) # Dual(0.0, 1.0)
+    >>> print(arcsin(y)) # Node(0.0, None, [])
     >>> print(arcsin(0)) # 0.0
     """
     if isinstance(other, float) or isinstance(other, int):
@@ -131,11 +131,11 @@ def arccos(other):
 
     Examples
     ----------
-    >>> x = Dual(1)
-    >>> y = Node(1)
-    >>> print(arccos(x).val) # 0.0
-    >>> print(arccos(y).val) # 0.0
-    >>> print(arccos(1)) # 0.0
+    >>> x = Dual(0)
+    >>> y = Node(0)
+    >>> print(arccos(x)) # Dual(1.5707963267948966, -1.0)
+    >>> print(arccos(y)) # Node(1.5707963267948966, None, [])
+    >>> print(arccos(0)) # 1.5707963267948966
     """
     if isinstance(other, float) or isinstance(other, int):
         return np.arccos(other)  
@@ -161,8 +161,8 @@ def arctan(other):
     ----------
     >>> x = Dual(0)
     >>> y = Node(0)
-    >>> print(arctan(x).val) # 0.0
-    >>> print(arctan(y).val) # 0.0
+    >>> print(arctan(x)) # Dual(0.0, 1.0)
+    >>> print(arctan(y)) # Node(0.0, None, [])
     >>> print(arctan(0)) # 0.0
     """
     if isinstance(other, float) or isinstance(other, int):
@@ -189,8 +189,8 @@ def sinh(other):
     ----------
     >>> x = Dual(0)
     >>> y = Node(0)
-    >>> print(sinh(x).val) # 0.0
-    >>> print(sinh(y).val) # 0.0
+    >>> print(sinh(x)) # Dual(0.0, 1.0)
+    >>> print(sinh(y)) # Node(0.0, None, [])
     >>> print(sinh(0)) # 0.0
     """
     if isinstance(other, float) or isinstance(other, int):
@@ -217,8 +217,8 @@ def cosh(other):
     ----------
     >>> x = Dual(0)
     >>> y = Node(0)
-    >>> print(cosh(x).val) # 1.0
-    >>> print(cosh(y).val) # 1.0
+    >>> print(cosh(x)) # Dual(1.0, 0.0)
+    >>> print(cosh(y)) # Node(1.0, None, [])
     >>> print(cosh(0)) # 1.0
     """
     if isinstance(other, float) or isinstance(other, int):
@@ -245,8 +245,8 @@ def tanh(other):
     ----------
     >>> x = Dual(0)
     >>> y = Node(0)
-    >>> print(tanh(x).val) # 0.0
-    >>> print(tanh(y).val) # 0.0
+    >>> print(tanh(x)) # Dual(0.0, 1.0)
+    >>> print(tanh(y)) # Node(0.0, None, [])
     >>> print(tanh(0)) # 0.0
     """
     if isinstance(other, float) or isinstance(other, int):
@@ -273,8 +273,8 @@ def arcsinh(other):
     ----------
     >>> x = Dual(0)
     >>> y = Node(0)
-    >>> print(arcsinh(x).val) # 0.0
-    >>> print(arcsinh(y).val) # 0.0
+    >>> print(arcsinh(x)) # Dual(0.0, 1.0)
+    >>> print(arcsinh(y)) # Node(0.0, None, [])
     >>> print(arcsinh(0)) # 0.0
     """
     if isinstance(other, float) or isinstance(other, int):
@@ -298,11 +298,11 @@ def arccosh(other):
 
     Examples
     ----------
-    >>> x = Dual(1)
-    >>> y = Node(1)
-    >>> print(arccosh(x).val) # 0.0
-    >>> print(arccosh(y).val) # 0.0
-    >>> print(arccosh(1)) # 0.0
+    >>> x = Dual(2)
+    >>> y = Node(2)
+    >>> print(arccosh(x)) # Dual(1.3169578969248166, 0.5773502691896258)
+    >>> print(arccosh(y)) # Node(1.3169578969248166, None, [])
+    >>> print(arccosh(0.5)) # 1.3169578969248166
     """
     if isinstance(other, float) or isinstance(other, int):
         return np.arccosh(other)  
@@ -328,8 +328,8 @@ def arctanh(other):
     ----------
     >>> x = Dual(0)
     >>> y = Node(0)
-    >>> print(arctanh(x).val) # 0.0
-    >>> print(arctanh(y).val) # 0.0
+    >>> print(arctanh(x)) # Dual(0.0, 1.0)
+    >>> print(arctanh(y)) # Node(0.0, None, [])
     >>> print(arctanh(0)) # 0.0
     """
     if isinstance(other, float) or isinstance(other, int):
@@ -356,8 +356,8 @@ def exp(other):
     ----------
     >>> x = Dual(0)
     >>> y = Node(0)
-    >>> print(exp(x).val) # 1.0
-    >>> print(exp(y).val) # 1.0
+    >>> print(exp(x)) # Dual(1.0, 1.0)
+    >>> print(exp(y)) # Node(1.0, None, [])
     >>> print(exp(0)) # 1.0
     """
     if isinstance(other, float) or isinstance(other, int):
@@ -384,8 +384,8 @@ def sqrt(other):
     ----------
     >>> x = Dual(4)
     >>> y = Node(4)
-    >>> print(exp(x).val) # 2.0
-    >>> print(exp(y).val) # 2.0
+    >>> print(exp(x)) # Dual(2.0, 0.25)
+    >>> print(exp(y)) # Node(2.0, None, [])
     >>> print(exp(4)) # 2.0
     """
     if isinstance(other, float) or isinstance(other, int):
@@ -409,6 +409,22 @@ def sqrt(other):
         raise TypeError
 
 def log(other, base):
+    """
+    Calculate the square root of a real number, Dual class, or Node class
+
+    Returns
+    ----------
+    Real number, Dual class, or Node class
+        Returns the output in the same type as the input
+
+    Examples
+    ----------
+    >>> x = Dual(8)
+    >>> y = Node(8)
+    >>> print(log(x, 2)) # Dual(3.0, 0.18033688011112042)
+    >>> print(log(y, 2)) # Node(2.0794415416798357, None, [])
+    >>> print(log(8, 2)) # 3.0
+    """
     if not (isinstance(base, float) or isinstance(base, int)):
         raise TypeError
     if isinstance(other, float) or isinstance(other, int):
@@ -432,6 +448,22 @@ def log(other, base):
         raise TypeError
 
 def logistic(other):
+    """
+    Calculate the square root of a real number, Dual class, or Node class
+
+    Returns
+    ----------
+    Real number, Dual class, or Node class
+        Returns the output in the same type as the input
+
+    Examples
+    ----------
+    >>> x = Dual(0)
+    >>> y = Node(0)
+    >>> print(logistic(x)) # Dual(0.5, 0.25)
+    >>> print(logistic(y)) # Node(0.5, None, [])
+    >>> print(0) # 0.5
+    """
     if isinstance(other, float) or isinstance(other, int) or isinstance(other, Dual) or isinstance(other, Node):
         return 1 / (1 + exp(-other))
     else:
