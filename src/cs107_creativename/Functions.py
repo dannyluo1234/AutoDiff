@@ -287,6 +287,7 @@ def arcsinh(other):
         return new_node  
     else:
         raise TypeError
+        
 def arccosh(other):
     """
     Calculate the arccosh of a real number, Dual class, or Node class

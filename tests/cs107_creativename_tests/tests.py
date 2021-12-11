@@ -546,7 +546,7 @@ def test_Forward_ne():
     
 def test_Forward_str():
     x = Dual(2,22)
-    assert str(x) == "Value: 2, Derivative: 22", Exception(f"test_Forward_str has wrong value")
+    assert str(x) == "Dual(2, 22)", Exception(f"test_Forward_repr has wrong value")
     
 def test_Forward_repr():
     x = Dual(2,22)
@@ -806,6 +806,14 @@ def test_Reverse_neg():
     f = -x
     assert f.val == -2, Exception(f"test_Reverse_neg has wrong value")
 
+def test_Reverse_str():
+    x = Node(2)
+    assert str(x) == "Node(2, None, [])", Exception(f"test_Forward_repr has wrong value")
+    
+def test_Reverse_repr():
+    x = Node(2)
+    assert repr(x) == "Node(2, None, [])", Exception(f"test_Forward_repr has wrong value")
+
 
 def test_Reverse_lt():
     # test between a Node number and a real number
@@ -963,6 +971,32 @@ def test_Reverse_arcsinh():
     f = arcsinh(x)
     assert f.val == pytest.approx(np.arcsinh(2), tolerance), Exception(f"test_Reverse_arcsinh has error")
     assert x.children == pytest.approx([(f, 1/np.sqrt(5))], tolerance), Exception(f"test_Reverse_arcsinh has error")
+
+
+
+def test_Reverse_tanh():
+# test tanh with a Node number
+    x = Node(2)
+    f = tanh(x)
+    assert f.val == pytest.approx(np.tanh(2), tolerance), Exception(f"test_Reverse_tanh has error")
+    assert x.children == pytest.approx([(f, (1/np.cosh(2))**2)],tolerance), Exception(f"test_Reverse_tanh has error")
+
+
+def test_Reverse_cosh():
+    # test cosh with a Node number
+    x = Node(2)
+    f = cosh(x)
+    assert f.val == pytest.approx(np.cosh(2), tolerance), Exception(f"test_Reverse_cosh has error")
+    assert x.children == pytest.approx([(f, np.sinh(2))],tolerance), Exception(f"test_Reverse_cosh has error")
+
+    
+def test_Reverse_sinh():
+    # test sinh with a Node number
+    x = Node(2)
+    f = sinh(x)
+    assert f.val == pytest.approx(np.sinh(2), tolerance), Exception(f"test_Reverse_sinh has error")
+    assert x.children == pytest.approx([(f, np.cosh(2))],tolerance), Exception(f"test_Reverse_sinh has error")
+
 
     
 # test AutoDiffR1D
