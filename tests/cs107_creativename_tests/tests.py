@@ -649,7 +649,7 @@ def test_Reverse_pow_rpow():
    y = Node(3)
    f = x**y
    assert f.val == 8, Exception(f"test_Reverse_pow_rpow has error in value with Node and non-node")
-   assert y.children == [(f,3*2**2)], Exception(f"test_Reverse_pow_rpow has error in second node's children")
+   assert y.children == [(f,2**3*np.log(2))], Exception(f"test_Reverse_pow_rpow has error in second node's children")
 
 
    # test invalid type addition
