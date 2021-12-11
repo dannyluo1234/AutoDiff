@@ -36,7 +36,7 @@ class Node():
     """
     def __init__(self, val):
         """
-        Intialize a Dual class object with an empty list of children and
+        Intialize a Node class object with an empty list of children and
         no derivative value.
         """
         if isinstance(val, int) or isinstance(val, float):
@@ -495,8 +495,8 @@ class Node():
 
         Examples
         ----------
-        >>> x = Dual(3)
-        >>> y = Dual(4)
+        >>> x = Node(3)
+        >>> y = Node(4)
         >>> f = x ** y
         >>> g = x + 7
         >>> repr(x)
@@ -515,8 +515,8 @@ class Node():
 
         Examples
         ----------
-        >>> x = Dual(3)
-        >>> y = Dual(4)
+        >>> x = Node(3)
+        >>> y = Node(4)
         >>> f = x ** y
         >>> g = x + 7
         >>> str(x)
@@ -527,6 +527,15 @@ class Node():
 
     # using reverse pass to calculate the gradient of specific variables
     def _AutoDiffR(self, variables):
+        """
+        Calculate the result gradient in reverse mode AD
+
+        Returns
+        ----------
+        List
+            A list of gradient, each element representing the gradient for one
+            variable
+        """
         self.der = 1
         result = []
         for var in variables:
@@ -536,6 +545,30 @@ class Node():
 
 # One dimensional case wher f: R^n to R
 def AutoDiffR1D(f, val):
+    """
+    For a one-dimensional function, f, and a list of values at which to evaluate
+    f, val, return the derivative(s) of the function in a list
+
+    Parameters
+    ----------
+    f : a lambda function or a user-defined function
+        First argument, the one-dimensional function to be evaluated
+    val : a list of real number(s)
+        Second argument, the value(s) at which the function should be evaluated
+
+    Returns
+    ----------
+    List
+        A list with the same size as val, representing the partial derivatives
+        of each variable
+
+    Examples
+    ----------
+    >>> AutoDiffR1D(lambda x, y : x + y ** 2, [3, 5])
+    >>> [1, 10]
+    >>> AutoDiffF1D(lambda x : x * 2, [3])
+    >>> [6]
+    """
     try:
         dimension = len(signature(f).parameters)
     except:
@@ -550,6 +583,37 @@ def AutoDiffR1D(f, val):
 
 # General Case, f_list could be a list of functions
 def AutoDiffR(f_list, val_list):
+    """
+    For a multi-dimensional function set, f_list, and a list of list of values
+    at which to evaluate the function set, val_list, return the derivative(s) of
+    the function in a list
+
+    Parameters
+    ----------
+    f_list : a list of lambda functions or user defined functions
+             First argument, a list of functions to be evaluated. Size of
+             val_list and f_list must match.
+    val_list : a list of list of real number(s)
+               Second argument, each list within the list represents a set of
+               values at which to evaluate the corresponding function within the
+               function set, f_list. Size of val_list and f_list must match.
+
+    Returns
+    ----------
+    List
+        A list of list with the same size as f_list and val_list, representing
+        the partial derivatives of each variable in each function
+
+    Examples
+    ----------
+    >>> AutoDiffF([lambda x: 2*x, lambda y: sin(y), lambda x, y: x+y],
+                  [[2],[5],[2,5]])
+    >>> [[2], [0.2836621854632263], [1, 1]]
+    >>> def f(x, y, z):
+            return x + y ** 2 / z
+    >>> AutoDiffF([lambda x: cos(x), f], [[np.pi], [np.pi, 3, 5]])
+    >>> [[-1.2246467991473532e-16], [1.0, 1.2, -0.36]]
+    """
     if isinstance(f_list, list):
         results = []
         if len(f_list) != len(val_list):
