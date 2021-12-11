@@ -420,7 +420,7 @@ class Dual():
         >>> str(x)
         >>> Value: 3, Derivative: 1
         """
-        return (f'Value: {self.val}, Derivative: {self.der}')
+        return (f'Dual({self.val}, {self.der})')
 
     def __repr__(self):
         """
