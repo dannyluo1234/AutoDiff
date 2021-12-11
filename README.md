@@ -1,8 +1,8 @@
 # cs107-FinalProject
-Group number: 17
+## Group number: 17
 
-Group members: Diana Feng, Varshini Subhash, Xiaobo Luo, Adriana Trejo-Sheu
-emails: dianafeng@g.harvard.edu, varshinisubhash@g.harvard.edu, xluo@g.harvard.edu, atrejosheu@g.harvard.edu
+### Group members: Diana Feng, Varshini Subhash, Xiaobo Luo, Adriana Trejo-Sheu
+#### emails: dianafeng@g.harvard.edu, varshinisubhash@g.harvard.edu, xluo@g.harvard.edu, atrejosheu@g.harvard.edu
 
 Description: This is the final project repo for Group 14 for CS107/AC207 Fall 2021
 
