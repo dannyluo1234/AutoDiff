@@ -11,6 +11,22 @@ import math
 import numpy as np
 
 def sin(other):
+    """
+    Calculate the sin of a real number, Dual class, or Node class
+
+    Returns
+    ----------
+    Real number, Dual class, or Node class
+        Returns the output in the same type as the input
+
+    Examples
+    ----------
+    >>> x = Dual(0)
+    >>> y = Node(0)
+    >>> print(sin(x)) # Dual(0.0, 1.0)
+    >>> print(sin(y)) # Node(1.0, None, [])
+    >>> print(sin(0)) # 0.0
+    """
     if isinstance(other, float) or isinstance(other, int):
         return math.sin(other)  
     elif isinstance(other, Dual):
@@ -22,6 +38,22 @@ def sin(other):
     else:
         raise TypeError  
 def cos(other):
+    """
+    Calculate the cos of a real number, Dual class, or Node class
+
+    Returns
+    ----------
+    Real number, Dual class, or Node class
+        Returns the output in the same type as the input
+
+    Examples
+    ----------
+    >>> x = Dual(np.pi)
+    >>> y = Node(np.pi)
+    >>> print(cos(x)) # Dual(-1.0, -1.2246467991473532e-16)
+    >>> print(cos(y)) # -1.0
+    >>> print(cos(np.pi)) # -1.0
+    """
     if isinstance(other, float) or isinstance(other, int):
         return math.cos(other)  
     elif isinstance(other, Dual):
@@ -33,6 +65,22 @@ def cos(other):
     else:
         raise TypeError          
 def tan(other):
+    """
+    Calculate the tan of a real number, Dual class, or Node class
+
+    Returns
+    ----------
+    Real number, Dual class, or Node class
+        Returns the output in the same type as the input
+
+    Examples
+    ----------
+    >>> x = Dual(0)
+    >>> y = Node(0)
+    >>> print(tan(x).val) # 0.0
+    >>> print(tan(y).val) # 0.0
+    >>> print(tan(0)) # 0.0
+    """
     if isinstance(other, float) or isinstance(other, int):
         return math.tan(other)  
     elif isinstance(other, Dual):
@@ -45,6 +93,22 @@ def tan(other):
         raise TypeError  
         
 def arcsin(other):
+    """
+    Calculate the arcsin of a real number, Dual class, or Node class
+
+    Returns
+    ----------
+    Real number, Dual class, or Node class
+        Returns the output in the same type as the input
+
+    Examples
+    ----------
+    >>> x = Dual(0)
+    >>> y = Node(0)
+    >>> print(arcsin(x).val) # 0.0
+    >>> print(arcsin(y).val) # 0.0
+    >>> print(arcsin(0)) # 0.0
+    """
     if isinstance(other, float) or isinstance(other, int):
         return np.arcsin(other)  
     elif isinstance(other, Dual):
@@ -57,6 +121,22 @@ def arcsin(other):
         raise TypeError  
         
 def arccos(other):
+    """
+    Calculate the arccos of a real number, Dual class, or Node class
+
+    Returns
+    ----------
+    Real number, Dual class, or Node class
+        Returns the output in the same type as the input
+
+    Examples
+    ----------
+    >>> x = Dual(1)
+    >>> y = Node(1)
+    >>> print(arccos(x).val) # 0.0
+    >>> print(arccos(y).val) # 0.0
+    >>> print(arccos(1)) # 0.0
+    """
     if isinstance(other, float) or isinstance(other, int):
         return np.arccos(other)  
     elif isinstance(other, Dual):
@@ -69,6 +149,22 @@ def arccos(other):
         raise TypeError  
         
 def arctan(other):
+    """
+    Calculate the arctan of a real number, Dual class, or Node class
+
+    Returns
+    ----------
+    Real number, Dual class, or Node class
+        Returns the output in the same type as the input
+
+    Examples
+    ----------
+    >>> x = Dual(0)
+    >>> y = Node(0)
+    >>> print(arctan(x).val) # 0.0
+    >>> print(arctan(y).val) # 0.0
+    >>> print(arctan(0)) # 0.0
+    """
     if isinstance(other, float) or isinstance(other, int):
         return np.arctan(other)  
     elif isinstance(other, Dual):
@@ -81,6 +177,22 @@ def arctan(other):
         raise TypeError  
         
 def sinh(other):
+    """
+    Calculate the sinh of a real number, Dual class, or Node class
+
+    Returns
+    ----------
+    Real number, Dual class, or Node class
+        Returns the output in the same type as the input
+
+    Examples
+    ----------
+    >>> x = Dual(0)
+    >>> y = Node(0)
+    >>> print(sinh(x).val) # 0.0
+    >>> print(sinh(y).val) # 0.0
+    >>> print(sinh(0)) # 0.0
+    """
     if isinstance(other, float) or isinstance(other, int):
         return np.sinh(other)  
     elif isinstance(other, Dual):
@@ -93,6 +205,22 @@ def sinh(other):
         raise TypeError
         
 def cosh(other):
+    """
+    Calculate the cosh of a real number, Dual class, or Node class
+
+    Returns
+    ----------
+    Real number, Dual class, or Node class
+        Returns the output in the same type as the input
+
+    Examples
+    ----------
+    >>> x = Dual(0)
+    >>> y = Node(0)
+    >>> print(cosh(x).val) # 1.0
+    >>> print(cosh(y).val) # 1.0
+    >>> print(cosh(0)) # 1.0
+    """
     if isinstance(other, float) or isinstance(other, int):
         return np.cosh(other)  
     elif isinstance(other, Dual):
@@ -105,6 +233,22 @@ def cosh(other):
         raise TypeError
         
 def tanh(other):
+    """
+    Calculate the tanh of a real number, Dual class, or Node class
+
+    Returns
+    ----------
+    Real number, Dual class, or Node class
+        Returns the output in the same type as the input
+
+    Examples
+    ----------
+    >>> x = Dual(0)
+    >>> y = Node(0)
+    >>> print(tanh(x).val) # 0.0
+    >>> print(tanh(y).val) # 0.0
+    >>> print(tanh(0)) # 0.0
+    """
     if isinstance(other, float) or isinstance(other, int):
         return np.tanh(other)  
     elif isinstance(other, Dual):
@@ -117,6 +261,22 @@ def tanh(other):
         raise TypeError
     
 def arcsinh(other):
+    """
+    Calculate the arcsinh of a real number, Dual class, or Node class
+
+    Returns
+    ----------
+    Real number, Dual class, or Node class
+        Returns the output in the same type as the input
+
+    Examples
+    ----------
+    >>> x = Dual(0)
+    >>> y = Node(0)
+    >>> print(arcsinh(x).val) # 0.0
+    >>> print(arcsinh(y).val) # 0.0
+    >>> print(arcsinh(0)) # 0.0
+    """
     if isinstance(other, float) or isinstance(other, int):
         return np.arcsinh(other)  
     elif isinstance(other, Dual):
@@ -128,6 +288,22 @@ def arcsinh(other):
     else:
         raise TypeError
 def arccosh(other):
+    """
+    Calculate the arccosh of a real number, Dual class, or Node class
+
+    Returns
+    ----------
+    Real number, Dual class, or Node class
+        Returns the output in the same type as the input
+
+    Examples
+    ----------
+    >>> x = Dual(1)
+    >>> y = Node(1)
+    >>> print(arccosh(x).val) # 0.0
+    >>> print(arccosh(y).val) # 0.0
+    >>> print(arccosh(1)) # 0.0
+    """
     if isinstance(other, float) or isinstance(other, int):
         return np.arccosh(other)  
     elif isinstance(other, Dual):
@@ -140,6 +316,22 @@ def arccosh(other):
         raise TypeError
     
 def arctanh(other):
+    """
+    Calculate the arctanh of a real number, Dual class, or Node class
+
+    Returns
+    ----------
+    Real number, Dual class, or Node class
+        Returns the output in the same type as the input
+
+    Examples
+    ----------
+    >>> x = Dual(0)
+    >>> y = Node(0)
+    >>> print(arctanh(x).val) # 0.0
+    >>> print(arctanh(y).val) # 0.0
+    >>> print(arctanh(0)) # 0.0
+    """
     if isinstance(other, float) or isinstance(other, int):
         return np.arctanh(other)  
     elif isinstance(other, Dual):
@@ -152,6 +344,22 @@ def arctanh(other):
         raise TypeError
         
 def exp(other):
+    """
+    Calculate the exponential of a real number, Dual class, or Node class
+
+    Returns
+    ----------
+    Real number, Dual class, or Node class
+        Returns the output in the same type as the input
+
+    Examples
+    ----------
+    >>> x = Dual(0)
+    >>> y = Node(0)
+    >>> print(exp(x).val) # 1.0
+    >>> print(exp(y).val) # 1.0
+    >>> print(exp(0)) # 1.0
+    """
     if isinstance(other, float) or isinstance(other, int):
         return math.exp(other)  
     elif isinstance(other, Dual):
@@ -164,6 +372,22 @@ def exp(other):
         raise TypeError
         
 def sqrt(other):
+    """
+    Calculate the square root of a real number, Dual class, or Node class
+
+    Returns
+    ----------
+    Real number, Dual class, or Node class
+        Returns the output in the same type as the input
+
+    Examples
+    ----------
+    >>> x = Dual(4)
+    >>> y = Node(4)
+    >>> print(exp(x).val) # 2.0
+    >>> print(exp(y).val) # 2.0
+    >>> print(exp(4)) # 2.0
+    """
     if isinstance(other, float) or isinstance(other, int):
         try:
             return math.sqrt(other)
