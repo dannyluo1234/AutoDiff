@@ -498,7 +498,7 @@ def test_Reverse_init():
     assert x.val == 3
     assert x.children == []
     assert x.der == None
-   
+
 def test_Reverse_add_radd():
    # test addition of two Nodes
    x = Node(5)
@@ -589,7 +589,7 @@ def test_Reverse_mul_rmul():
    assert y.children == [(f,5)], Exception(f"test_Reverse_mul_rmul has error in second node's children")
 
 
-   # test invalid type addition
+   # test invalid type multiplication
    with pytest.raises(TypeError):
        x = Node(5)
        f = x*np.array([0, 4, 9])
@@ -612,7 +612,6 @@ def test_Reverse_truediv_rtruediv():
    assert f.val == 0.5, Exception(f"test_Reverse_truediv_rtruediv has error in value with Node and non-node")
    assert y.children == [(f,1/6)], Exception(f"test_Reverse_truediv_rtruediv has error in second node's children")
 
-
    # test division of a Node and non-Node number
    x = 6
    y = Node(3)
@@ -621,7 +620,7 @@ def test_Reverse_truediv_rtruediv():
    assert y.children == [(f,-6/9)], Exception(f"test_Reverse_truediv_rtruediv has error in second node's children")
 
 
-   # test invalid type addition
+   # test invalid type division
    with pytest.raises(TypeError):
        x = Node(5)
        f = x/np.array([0, 4, 9])
@@ -660,17 +659,61 @@ def test_Reverse_pow_rpow():
        
        
 def test_Reverse_neg():
-    # test between two Dual numbers
+    # test negative for a Node number
     x = Node(2)
     f = -x
     assert f.val == -2, Exception(f"test_Reverse_neg has wrong value")
 
 
+def test_Reverse_lt():
+    # test between a Node number and a non-Node number
+    x = 2
+    y = Node(3)
+    assert x < y.val, Exception(f"test_Reverse_lt has wrong value")
+       
+    # test between two Node numbers 
+    x = Node(2)
+    y = Node(3)
+    assert x.val < y.val, Exception(f"test_Reverse_lt has wrong value")
 
+def test_Reverse_gt():
+    # test between a Node number and a non-Node number
+    x = 5
+    y = Node(3)
+    assert x > y.val, Exception(f"test_Reverse_gt has wrong value")
        
-       
+    # test between two Node numbers 
+    x = Node(5)
+    y = Node(3)
+    assert x.val > y.val, Exception(f"test_Reverse_gt has wrong value")   
        
 
+def test_Reverse_ge():
+    # test between a Node number and a non-Node number
+    x = 5
+    y = Node(5)
+    assert x >= y.val, Exception(f"test_Reverse_ge has wrong value")
+       
+    # test between two Node numbers 
+    x = Node(5)
+    y = Node(5)
+    assert x.val >= y.val, Exception(f"test_Reverse_ge has wrong value") 
+
+
+def test_Reverse_eq():
+    # test between two Node numbers
+    x = Node(2)
+    y = Node(2)
+    assert x.val == y.val, Exception(f"test_Reverse_eq has wrong value")
+    assert x.der == y.der, Exception(f"test_Reverse_eq has wrong derivative")
+    assert x.children == y.children, Exception(f"test_Reverse_eq has wrong children")
+
+def test_Reverse_ne():
+    # test between two Node numbers
+    x = Node(2)
+    y = Node(3)
+    assert x.val is not y.val, Exception(f"test_Reverse_ne has wrong value")
+    
 def test_Reverse_sin():
     # test sin with a Node 
     x = Node(2)
@@ -692,3 +735,27 @@ def test_Reverse_tan():
     f = tan(x)
     assert f.val == pytest.approx(math.tan(2), tolerance), Exception(f"test_Reverse_tan has error")
     assert x.children == pytest.approx([(f,1/(math.cos(2)**2))],tolerance), Exception(f"test_Reverse_tan has error")
+
+
+def test_Reverse_arcsin():
+    # test arcsin with a Node number
+    x = Node(0.5)
+    f = arcsin(x)
+    assert f.val == pytest.approx(np.arcsin(0.5), tolerance), Exception(f"test_Reverse_arcsin has error")
+    assert x.children == pytest.approx([(f, 1/(math.sqrt(0.75)))],tolerance), Exception(f"test_Reverse_arcsin has error in children")
+
+
+def test_Reverse_arccos():
+    # test arccos with a Node number
+    x = Node(0.5)
+    f = arccos(x)
+    assert f.val == pytest.approx(np.arccos(0.5), tolerance), Exception(f"test_Reverse_arccos has error")
+    assert x.children == pytest.approx([(f, -1/(math.sqrt(0.75)))],tolerance), Exception(f"test_Reverse_arccos has error in children")
+
+
+def test_Reverse_arctan():
+    # test arctan with a Dual number
+    x = Node(0.5)
+    f = arctan(x)
+    assert f.val == pytest.approx(np.arctan(0.5), tolerance), Exception(f"test_Reverse_arctan has error")
+    assert x.children == pytest.approx([(f, 0.8)], tolerance), Exception(f"test_Forward_arctan has error")
