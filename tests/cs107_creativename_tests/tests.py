@@ -964,6 +964,32 @@ def test_Reverse_arcsinh():
     assert f.val == pytest.approx(np.arcsinh(2), tolerance), Exception(f"test_Reverse_arcsinh has error")
     assert x.children == pytest.approx([(f, 1/np.sqrt(5))], tolerance), Exception(f"test_Reverse_arcsinh has error")
 
+
+
+def test_Reverse_tanh():
+# test tanh with a Node number
+    x = Node(2)
+    f = tanh(x)
+    assert f.val == pytest.approx(np.tanh(2), tolerance), Exception(f"test_Reverse_tanh has error")
+    assert x.children == pytest.approx([(f, (1/np.cosh(2))**2)],tolerance), Exception(f"test_Reverse_tanh has error")
+
+
+def test_Reverse_cosh():
+    # test cosh with a Node number
+    x = Node(2)
+    f = cosh(x)
+    assert f.val == pytest.approx(np.cosh(2), tolerance), Exception(f"test_Reverse_cosh has error")
+    assert x.children == pytest.approx([(f, np.sinh(2))],tolerance), Exception(f"test_Reverse_cosh has error")
+
+    
+def test_Reverse_sinh():
+    # test sinh with a Node number
+    x = Node(2)
+    f = sinh(x)
+    assert f.val == pytest.approx(np.sinh(2), tolerance), Exception(f"test_Reverse_sinh has error")
+    assert x.children == pytest.approx([(f, np.cosh(2))],tolerance), Exception(f"test_Reverse_sinh has error")
+
+
     
 # test AutoDiffR1D
 def test_AutoDiffR1D():
