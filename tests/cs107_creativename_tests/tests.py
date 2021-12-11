@@ -979,7 +979,7 @@ def test_Reverse_tanh():
     x = Node(2)
     f = tanh(x)
     assert f.val == pytest.approx(np.tanh(2), tolerance), Exception(f"test_Reverse_tanh has error")
-    assert x.children == pytest.approx([(f, (1/np.cosh(2))**2)],tolerance), Exception(f"test_Reverse_tanh has error")
+    assert x.children == pytest.approx([(f, 1/np.cosh(2)**2)],tolerance), Exception(f"test_Reverse_tanh has error")
 
 
 def test_Reverse_cosh():
@@ -998,7 +998,53 @@ def test_Reverse_sinh():
     assert x.children == pytest.approx([(f, np.cosh(2))],tolerance), Exception(f"test_Reverse_sinh has error")
 
 
+def test_Reverse_exp():
+    # test exp with a Node number
+    x = Node(2)
+    f = exp(x)
+    assert f.val == pytest.approx(math.exp(2), tolerance), Exception(f"test_Reverse_exp has error")
+    assert x.children == pytest.approx([(f, math.exp(2))],tolerance), Exception(f"test_Reverse_exp has error")
+
     
+def test_Reverse_sqrt():
+    # test sqrt with a Node number
+    x = Node(4)
+    f1 = sqrt(x)
+    assert f1.val == pytest.approx(np.sqrt(4), tolerance), Exception(f"test_Reverse_sqrt has error for Node class")
+    assert x.children == pytest.approx([(f1, 0.25)], tolerance), Exception(f"test_Reverse_sqrt has error for the derivative for Node class")
+
+    # test sqrt with a negative Node number
+    x2 = Node(-4)
+    with pytest.raises(ValueError):
+        f2 = sqrt(x2)
+
+
+def test_logistic():
+    x_str = 'Sample string'
+    with pytest.raises(TypeError):
+        f = logistic(x_str)
+
+    x_int = 2
+    f_int = logistic(x_int)
+    assert f_int == pytest.approx(1/(1+math.exp(-2)), tolerance), Exception(f"test_logistic has error for int input")
+
+    x_fl = 2.0
+    f_fl = logistic(x_fl)
+    assert f_fl == pytest.approx(1/(1+math.exp(-2.0)), tolerance), Exception(f"test_logistic has error for float input")
+
+    x1 = Dual(2,1)
+    f1 = logistic(x1)
+    assert f1.val == pytest.approx(1/(1+math.exp(-2)), tolerance), Exception(f"test_logistic has error for Dual input")
+    assert f1.der == pytest.approx(-math.exp(2)/((1+math.exp(2))**2),tolerance), Exception(f"test_logistic has error for Dual input")
+
+
+    x2 = Node(2)
+    f2 = logistic(x2)
+    assert f2.val == pytest.approx(1/(1+math.exp(-2)), tolerance), Exception(f"test_logistic has error for Node input")
+    assert x2.children == pytest.approx([(f2, -math.exp(2)/((1+math.exp(2))**2))],tolerance), Exception(f"test_logistic has error for Node input")
+
+
+
 # test AutoDiffR1D
 def test_AutoDiffR1D():
     # test one dimensional function
