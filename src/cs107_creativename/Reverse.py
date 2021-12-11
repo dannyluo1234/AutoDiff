@@ -522,7 +522,7 @@ class Node():
         >>> str(x)
         >>> 'Node(3, None, [(Node(81, None, []), 108), (Node(10, None, []), 1)])'
         """
-        return self.__repr__
+        return(f'Node({self.val}, {self.der}, {self.children})')
 
 
     # using reverse pass to calculate the gradient of specific variables

@@ -57,7 +57,7 @@ class Dual():
         >>> x = Dual(3)
         >>> y = Dual(4)
         >>> f = x + y
-        >>> print(f) # Value:7, Derivative: 2
+        >>> print(f) # Dual(7, 2)
         """
         if isinstance(other, float) or isinstance(other, int):
             return Dual(self.val + other, self.der)
@@ -80,7 +80,7 @@ class Dual():
         >>> x = Dual(3)
         >>> y = Dual(4)
         >>> f = x + y
-        >>> print(f) # Value:7, Derivative: 2
+        >>> print(f) # Dual(7, 2)
         """
         return self.__add__(other)
     
@@ -99,7 +99,7 @@ class Dual():
         >>> x = Dual(3)
         >>> y = Dual(4)
         >>> f = x * y
-        >>> print(f) # Value:12, Derivative: 7
+        >>> print(f) # Dual(12, 7)
         """
         if isinstance(other, float) or isinstance(other, int):
             return Dual(self.val * other, self.der * other)
@@ -123,7 +123,7 @@ class Dual():
         >>> x = Dual(3)
         >>> y = Dual(4)
         >>> f = x * y
-        >>> print(f) # Value:12, Derivative: 7
+        >>> print(f) # Dual(12, 7)
         """
         return self.__mul__(other)
     
@@ -141,7 +141,7 @@ class Dual():
         >>> x = Dual(3)
         >>> y = Dual(4)
         >>> f = x / y
-        >>> print(f) # Value:0.75, Derivative: 0.0625
+        >>> print(f) # Dual(0.75, 0.0625)
         """
         if isinstance(other, float) or isinstance(other, int):
             return Dual(self.val / other, self.der / other)
@@ -164,7 +164,7 @@ class Dual():
         >>> x = Dual(3)
         >>> y = Dual(4)
         >>> f = x / y
-        >>> print(f) # Value:0.75, Derivative: 0.0625
+        >>> print(f) # Dual(0.75, 0.0625)
         """
         if isinstance(other, float) or isinstance(other, int):
             return Dual(other/self.val, -self.der * other /(self.val ** 2))
@@ -185,8 +185,8 @@ class Dual():
         ----------
         >>> x = Dual(3)
         >>> y = Dual(4)
-        >>> f = x / y
-        >>> print(f) # Value:0.75, Derivative: 0.0625
+        >>> f = x - y
+        >>> print(f) # Dual(-1, 0)
         """
         if isinstance(other, float) or isinstance(other, int):
             return Dual(self.val - other, self.der)
@@ -208,8 +208,8 @@ class Dual():
         ----------
         >>> x = Dual(3)
         >>> y = Dual(4)
-        >>> f = x / y
-        >>> print(f) # Value:0.75, Derivative: 0.0625
+        >>> f = x - y
+        >>> print(f) # Dual(-1, 0)
         """
         if isinstance(other, float) or isinstance(other, int):
             return Dual(other-self.val, -self.der )
@@ -231,7 +231,7 @@ class Dual():
         >>> x = Dual(3)
         >>> y = Dual(4)
         >>> f = x ** y
-        >>> print(f) # Value: 81, Derivative: 196.9875953821169
+        >>> print(f) # Dual(81, 196.9875953821169)
         """
         if isinstance(other, float) or isinstance(other, int):
             return Dual(self.val ** other, other * self.val ** (other-1) * self.der)
@@ -255,7 +255,7 @@ class Dual():
         >>> x = Dual(3)
         >>> y = Dual(4)
         >>> f = x ** y
-        >>> print(f) # Value: 81, Derivative: 196.9875953821169
+        >>> print(f) # Dual(81, 196.9875953821169)
         """
         if isinstance(other, float) or isinstance(other, int):
             return Dual(other ** self.val, other ** self.val * self.der * math.log(other) )
@@ -276,7 +276,7 @@ class Dual():
         >>> x = Dual(3)
         >>> y = Dual(4)
         >>> f = -x
-        >>> print(f) # Value: -3, Derivative: -1
+        >>> print(f) # Dual(-3, -1)
         """
         return self.__mul__(-1)
 
@@ -420,7 +420,7 @@ class Dual():
         >>> str(x)
         >>> Value: 3, Derivative: 1
         """
-        return (f'Value: {self.val}, Derivative: {self.der}')
+        return (f'Dual({self.val}, {self.der})')
 
     def __repr__(self):
         """

@@ -546,7 +546,7 @@ def test_Forward_ne():
     
 def test_Forward_str():
     x = Dual(2,22)
-    assert str(x) == "Value: 2, Derivative: 22", Exception(f"test_Forward_str has wrong value")
+    assert str(x) == "Dual(2, 22)", Exception(f"test_Forward_repr has wrong value")
     
 def test_Forward_repr():
     x = Dual(2,22)
@@ -805,6 +805,14 @@ def test_Reverse_neg():
     x = Node(2)
     f = -x
     assert f.val == -2, Exception(f"test_Reverse_neg has wrong value")
+
+def test_Reverse_str():
+    x = Node(2)
+    assert str(x) == "Node(2, None, [])", Exception(f"test_Forward_repr has wrong value")
+    
+def test_Reverse_repr():
+    x = Node(2)
+    assert repr(x) == "Node(2, None, [])", Exception(f"test_Forward_repr has wrong value")
 
 
 def test_Reverse_lt():
