@@ -127,6 +127,7 @@ def arcsinh(other):
         return new_node  
     else:
         raise TypeError
+        
 def arccosh(other):
     if isinstance(other, float) or isinstance(other, int):
         return np.arccosh(other)  
