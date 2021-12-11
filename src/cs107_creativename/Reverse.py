@@ -108,7 +108,7 @@ class Node():
         elif isinstance(other, Node):
             new_node = Node(self.val ** other.val)
             self.children.append((new_node, other.val * self.val ** (other.val-1)))
-            other.children.append((new_node, self.val ** other.val * math.log(other.val)))
+            other.children.append((new_node, self.val ** other.val * math.log(self.val)))
             return new_node       
         else:
             raise TypeError         

@@ -430,8 +430,8 @@ def test_Forward_lt():
     # test between a Dual number and a non-Dual number
     x = 2
     y = Dual(3)
-    f = x < y.val
-    f1 = x > y.val
+    f = x < y
+    f1 = x > y
     assert f == True , Exception(f"test_Forward_lt has wrong value")
     assert f1 == False , Exception(f"test_Forward_lt has wrong value")
     
@@ -439,8 +439,8 @@ def test_Forward_lt():
     # test between two Dual numbers
     x = Dual(2)
     y = Dual(3)
-    f = x.val < y.val
-    f1 = y.val < x.val
+    f = x < y
+    f1 = y < x
     assert f == True, Exception(f"test_Forward_lt has wrong value")
     assert f1 == False, Exception(f"test_Forward_lt has wrong value")
     
@@ -448,23 +448,23 @@ def test_Forward_lt():
     x = Dual(2)
     y = 'string'
     with pytest.raises(TypeError):
-        x.val < y
+        x < y
     
     
 def test_Forward_le():
     # test between a Dual number and a non-Dual number
     x = 2
     y = Dual(3)
-    f = x <= y.val
-    f1 = y.val <= x
+    f = x <= y
+    f1 = y <= x
     assert f == True, Exception(f"test_Forward_le has wrong value")
     assert f1 == False, Exception(f"test_Forward_le has wrong value")
        
     # test between two Dual numbers
     x = Dual(2)
     y = Dual(3)
-    f = x.val <= y.val
-    f1 = y.val <= x.val
+    f = x <= y
+    f1 = y <= x
     assert f == True, Exception(f"test_Forward_le has wrong value")
     assert f1 == False, Exception(f"test_Forward_le has wrong value")
     
@@ -473,23 +473,23 @@ def test_Forward_le():
     x = Dual(2)
     y = 'string'
     with pytest.raises(TypeError):
-        x.val < y
+        x <= y
     
     
 def test_Forward_gt():
     # test between a Dual number and a non-Dual number
     x = 3
     y = Dual(1)
-    f = x > y.val
-    f1 = y.val > x
+    f = x > y
+    f1 = y > x
     assert f == True, Exception(f"test_Forward_gt has wrong value")
     assert f1 == False, Exception(f"test_Forward_gt has wrong value")
     
     # test between two Dual numbers
     x = Dual(3)
     y = Dual(1)
-    f = x.val > y.val
-    f1 = y.val > x.val
+    f = x > y
+    f1 = y > x
     assert f == True, Exception(f"test_Forward_gt has wrong value")
     assert f1 == False, Exception(f"test_Forward_gt has wrong value")
     
@@ -497,7 +497,7 @@ def test_Forward_gt():
     x = Dual(2)
     y = 'string'
     with pytest.raises(TypeError):
-        x.val > y
+        x > y
     
     
     
@@ -505,16 +505,16 @@ def test_Forward_ge():
     # test between a Dual number and a non-Dual number
     x = 3
     y = Dual(1)
-    f = x >= y.val
-    f1 = y.val >= x
+    f = x >= y
+    f1 = y >= x
     assert f == True, Exception(f"test_Forward_ge has wrong value")
     assert f1 == False, Exception(f"test_Forward_ge has wrong value")
        
     # test between two Dual numbers
     x = Dual(3)
     y = Dual(1)
-    f = x.val >= y.val
-    f1 = y.val >= x.val
+    f = x >= y
+    f1 = y >= x
     assert f == True, Exception(f"test_Forward_ge has wrong value")
     assert f1 == False, Exception(f"test_Forward_ge has wrong value")
 
@@ -523,24 +523,35 @@ def test_Forward_ge():
     x = Dual(2)
     y = 'string'
     with pytest.raises(TypeError):
-        x.val >= y
+        x >= y
     
     
 def test_Forward_eq():
     # test between two Dual numbers
     x = Dual(2)
     y = Dual(2)
-    assert x.val == y.val, Exception(f"test_Forward_eq has wrong value")
-    assert x.der == y.der, Exception(f"test_Forward_eq has wrong derivative")
+    assert x == y, Exception(f"test_Forward_eq has wrong value")
     
-    
+    # test between Dual number and other type
+    x = Dual(2)
+    y = 3
+    assert (x == y) is False, Exception(f"test_Forward_eq has wrong value")
 
 
 def test_Forward_ne():
     # test between two Dual numbers
     x = Dual(2)
     y = Dual(3)
-    assert x.val is not y.val, Exception(f"test_Forward_ne has wrong value")
+    assert x != y, Exception(f"test_Forward_ne has wrong value")
+    
+def test_Forward_str():
+    x = Dual(2,22)
+    assert str(x) == "Value: 2, Derivative: 22", Exception(f"test_Forward_str has wrong value")
+    
+def test_Forward_repr():
+    x = Dual(2,22)
+    assert repr(x) == "Dual(2, 22)", Exception(f"test_Forward_repr has wrong value")
+
 
 def test_Forward_sqrt():
     x = Dual(4, 2)
@@ -587,7 +598,7 @@ def test_AutoDiffF1D():
         grad1 = AutoDiffF1D("3", [1,2,3,4])    
 
 # test AutoDiff
-def test_AutoDiff():
+def test_AutoDiffF():
     # test one dimensional function
     func = lambda x,y,z: x**2 + 2*y + sin(z)
     grad1 = AutoDiffF(func, [1,2,3])
@@ -679,6 +690,11 @@ def test_Reverse_sub_rsub():
        x = Node(5)
        f = x - np.array([0, 4, 9])
        
+   # test invalid type reverse addition
+   with pytest.raises(TypeError):
+       x = Node(5)
+       f = [0, 4, 9] - x
+
        
 def test_Reverse_mul_rmul():
    # test subtraction of two Nodes
@@ -742,6 +758,11 @@ def test_Reverse_truediv_rtruediv():
        x = Node(5)
        f = x/np.array([0, 4, 9])
        
+   # test invalid reverse type division
+   with pytest.raises(TypeError):
+       x = Node(5)
+       f = [0, 4, 9] / x
+       
        
 def test_Reverse_pow_rpow():
    # test power of two Nodes
@@ -750,7 +771,7 @@ def test_Reverse_pow_rpow():
    f = x**y
    assert f.val == 8, Exception(f"test_Reverse_pow_rpow has error in value with two Nodes")
    assert x.children == [(f,12)], Exception(f"test_Reverse_pow_rpow has error in first node's children")
-   assert y.children == [(f,2**3*math.log(3))], Exception(f"test_Reverse_pow_rpow has error in second node's children")
+   assert y.children == [(f,2**3*math.log(2))], Exception(f"test_Reverse_pow_rpow has error in second node's children")
    
 
    # test reverse power of a Node and non-Node number
@@ -774,6 +795,10 @@ def test_Reverse_pow_rpow():
        x = Node(5)
        f = x**np.array([0, 4, 9])
        
+   # test invalid type addition
+   with pytest.raises(TypeError):
+       x = Node(5)
+       f = [0, 4, 9]**x
        
 def test_Reverse_neg():
     # test negative for a Node number
@@ -783,53 +808,89 @@ def test_Reverse_neg():
 
 
 def test_Reverse_lt():
-    # test between a Node number and a non-Node number
+    # test between a Node number and a real number
     x = 2
     y = Node(3)
-    assert x < y.val, Exception(f"test_Reverse_lt has wrong value")
+    assert x < y, Exception(f"test_Reverse_lt has wrong value")
        
     # test between two Node numbers 
     x = Node(2)
     y = Node(3)
-    assert x.val < y.val, Exception(f"test_Reverse_lt has wrong value")
+    assert x < y, Exception(f"test_Reverse_lt has wrong value")
+    
+    # test between a Node number and other types
+    x = Node(2)
+    y = "3"
+    with pytest.raises(TypeError):
+        x < y
 
 def test_Reverse_gt():
     # test between a Node number and a non-Node number
     x = 5
     y = Node(3)
-    assert x > y.val, Exception(f"test_Reverse_gt has wrong value")
+    assert x > y, Exception(f"test_Reverse_gt has wrong value")
        
     # test between two Node numbers 
     x = Node(5)
     y = Node(3)
-    assert x.val > y.val, Exception(f"test_Reverse_gt has wrong value")   
-       
+    assert x > y, Exception(f"test_Reverse_gt has wrong value")  
+    
+    # test between a Node number and other types
+    x = Node(2)
+    y = "3"
+    with pytest.raises(TypeError):
+        x > y       
 
 def test_Reverse_ge():
     # test between a Node number and a non-Node number
-    x = 5
+    x = 6
     y = Node(5)
-    assert x >= y.val, Exception(f"test_Reverse_ge has wrong value")
+    assert x >= y, Exception(f"test_Reverse_ge has wrong value")
        
     # test between two Node numbers 
-    x = Node(5)
-    y = Node(5)
-    assert x.val >= y.val, Exception(f"test_Reverse_ge has wrong value") 
+    x = Node(7)
+    y = Node(6)
+    assert x >= y, Exception(f"test_Reverse_ge has wrong value") 
 
+    # test between a Node number and other types
+    x = Node(2)
+    y = "3"
+    with pytest.raises(TypeError):
+        x >= y
+        
+def test_Reverse_le():
+    # test between a Node number and a non-Node number
+    x = 4
+    y = Node(5)
+    assert x <= y, Exception(f"test_Reverse_ge has wrong value")
+       
+    # test between two Node numbers 
+    x = Node(4)
+    y = Node(5)
+    assert x <= y, Exception(f"test_Reverse_ge has wrong value") 
+
+    # test between a Node number and other types
+    x = Node(2)
+    y = "3"
+    with pytest.raises(TypeError):
+        x <= y
 
 def test_Reverse_eq():
     # test between two Node numbers
     x = Node(2)
     y = Node(2)
-    assert x.val == y.val, Exception(f"test_Reverse_eq has wrong value")
-    assert x.der == y.der, Exception(f"test_Reverse_eq has wrong derivative")
-    assert x.children == y.children, Exception(f"test_Reverse_eq has wrong children")
-
+    assert x == y, Exception(f"test_Reverse_eq has wrong value")
+    
+    # test between Node number and other type
+    x = Node(2)
+    y = 2
+    assert not(x == y), Exception(f"test_Reverse_eq has wrong value")    
+    
 def test_Reverse_ne():
     # test between two Node numbers
     x = Node(2)
     y = Node(3)
-    assert x.val is not y.val, Exception(f"test_Reverse_ne has wrong value")
+    assert x != y, Exception(f"test_Reverse_ne has wrong value")
     
 def test_Reverse_sin():
     # test sin with a Node 
@@ -876,3 +937,36 @@ def test_Reverse_arctan():
     f = arctan(x)
     assert f.val == pytest.approx(np.arctan(0.5), tolerance), Exception(f"test_Reverse_arctan has error")
     assert x.children == pytest.approx([(f, 0.8)], tolerance), Exception(f"test_Forward_arctan has error")
+    
+# test AutoDiffR1D
+def test_AutoDiffR1D():
+    # test one dimensional function
+    func = lambda x,y,z: x**2 + 2*y + sin(z)
+    grad1 = AutoDiffR1D(func, [1,2,3])
+    assert grad1 == pytest.approx([2, 2, np.cos(3)], tolerance), Exception(f"test_AutoDiffR1D has error")
+   
+    # test mismatch input dimension
+    with pytest.raises(Exception):
+        grad1 = AutoDiffR1D(func, [1,2,3,4])
+    
+    # test invalid input (non-function input)
+    with pytest.raises(TypeError):
+        grad1 = AutoDiffR1D("3", [1,2,3,4])    
+
+# test AutoDiff
+def test_AutoDiffR():
+    # test one dimensional function
+    func = lambda x,y,z: x**2 + 2*y + sin(z)
+    grad1 = AutoDiffR(func, [1,2,3])
+    assert grad1 == pytest.approx([2, 2, np.cos(3)], tolerance), Exception(f"test_AutoDiffF1D has error")
+   
+    # test mismatch function length and value length
+    func2 = lambda x,y,z: x**y + 4*(x-y) + tan(z)
+    with pytest.raises(Exception):
+        grad1 = AutoDiffR([func, func2], [[1,2,3],[1,2,4],[3]])    
+    
+    # test AutoDiff with multiple function
+    grad1 = AutoDiffR([func, func2], [[1,2,3],[1,2,4]])  
+    assert grad1[0] == pytest.approx([2, 2, np.cos(3)], tolerance), Exception(f"test_AutoDiffF has error")
+    assert grad1[1] == pytest.approx([2 * 1+4, 1*np.log(1)-4, 1/np.cos(4)**2], tolerance), Exception(f"test_AutoDiffF has error")
+    
