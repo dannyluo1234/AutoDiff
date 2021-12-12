@@ -1032,18 +1032,47 @@ def test_logistic():
     f_fl = logistic(x_fl)
     assert f_fl == pytest.approx(1/(1+math.exp(-2.0)), tolerance), Exception(f"test_logistic has error for float input")
 
-    x1 = Dual(2,1)
+    x1 = Dual(2,2)
     f1 = logistic(x1)
     assert f1.val == pytest.approx(1/(1+math.exp(-2)), tolerance), Exception(f"test_logistic has error for Dual input")
-    assert f1.der == pytest.approx(-math.exp(2)/((1+math.exp(2))**2),tolerance), Exception(f"test_logistic has error for Dual input")
+    assert f1.der == pytest.approx(2 * math.exp(-2)/((1+math.exp(-2))**2),tolerance), Exception(f"test_logistic has error for Dual input")
 
 
     x2 = Node(2)
     f2 = logistic(x2)
     assert f2.val == pytest.approx(1/(1+math.exp(-2)), tolerance), Exception(f"test_logistic has error for Node input")
-    assert x2.children == pytest.approx([(f2, -math.exp(2)/((1+math.exp(2))**2))],tolerance), Exception(f"test_logistic has error for Node input")
+    assert x2.children == pytest.approx([(f2, math.exp(-2)/((1+math.exp(-2))**2))],tolerance), Exception(f"test_logistic has error for Node input")
 
+def test_log():
+    with pytest.raises(TypeError):
+        f = log(3, "4") 
+    
+    x_str = 'Sample string'
+    with pytest.raises(TypeError):
+        f = log(x_str, 4)
+    
+    with pytest.raises(ValueError):
+        f = log(3, -4)
+    
+    x_fl = 2.0
+    f_fl = log(x_fl,3)
+    assert f_fl == pytest.approx(math.log(2,3), tolerance), Exception(f"test_logistic has error for float input")
 
+    x1 = Dual(2,2)
+    f1 = log(x1, 4)
+    assert f1.val == pytest.approx(math.log(2,4), tolerance), Exception(f"test_logistic has error for Dual input")
+    assert f1.der == pytest.approx(2 / (2 * math.log(4)),tolerance), Exception(f"test_logistic has error for Dual input")
+
+    with pytest.raises(ValueError):
+        f = log(x1, -4)    
+
+    x2 = Node(2)
+    f2 = log(x2, 4)
+    assert f2.val == pytest.approx(math.log(2,4), tolerance), Exception(f"test_logistic has error for Node input")
+    assert x2.children == pytest.approx([(f2, 1 / (2 * math.log(4)))],tolerance), Exception(f"test_logistic has error for Node input")
+
+    with pytest.raises(ValueError):
+        f = log(x2, -4)    
 
 # test AutoDiffR1D
 def test_AutoDiffR1D():

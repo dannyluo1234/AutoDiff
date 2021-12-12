@@ -440,7 +440,7 @@ def log(other, base):
             raise ValueError("Attempting to take log with negative value.") from None
     elif isinstance(other, Node):
         try:
-            new_node = Node(math.log(other.val))
+            new_node = Node(math.log(other.val, base))
             other.children.append((new_node, 1 / other.val / math.log(base)))
             return new_node  
         except ValueError:
@@ -465,7 +465,11 @@ def logistic(other):
     >>> print(logistic(y)) # Node(0.5, None, [])
     >>> print(0) # 0.5
     """
-    if isinstance(other, float) or isinstance(other, int) or isinstance(other, Dual) or isinstance(other, Node):
+    if isinstance(other, float) or isinstance(other, int) or isinstance(other, Dual):
         return 1 / (1 + exp(-other))
+    if isinstance(other, Node):
+        new_node = Node(1 / (1 + math.exp(-other.val)))
+        other.children.append((new_node, math.exp(-other.val)/((1+math.exp(-other.val))**2)))
+        return new_node  
     else:
         raise TypeError
